@@ -393,15 +393,15 @@ u8 what_is_numbe_10(s32 number_vaule)
 {
     if(number_vaule <0)
     {
-    	if(number_vaule<=-1000)
+    	if(number_vaule <= -1000)
     		return 5;
-    	if(number_vaule<= -100)
+    	if(number_vaule <= -100)
     		return 4;
 
-    	if(number_vaule<=-10)
+    	if(number_vaule <= -10)
     		return 3;
-    	if(number_vaule<0)
-    		return 2;
+    	if(number_vaule <0)
+    		return 3;
 
     }
     else
@@ -1586,7 +1586,7 @@ void menu_main_display(void)
     
     sprintf((char *)dtbuf,"%c%c%c",week_word[week][0],week_word[week][1],week_word[week][2]);
 	OLED_ShowString(88,48,dtbuf);
-	temperature_F=temperature;
+	temperature_F = temperature;
 
 	if(system_flag_table->myunit.TEMP == 0)
 	{
@@ -1596,12 +1596,12 @@ void menu_main_display(void)
 	}
 	else if(system_flag_table->myunit.TEMP == 1)
 	{
-        temperature_F = 320+(1.8*temperature);
+        temperature_F = 320 + (1.8*temperature);
         sprintf((char *)dtbuf,"%.1f F",temperature_F/10);	//得到经度字符串
 
 	}
 
-	OLED_ShowString((80-what_is_numbe_10(temperature_F/10)*8),16,dtbuf);
+	OLED_ShowString((80 - what_is_numbe_10(temperature_F/10)*8),16,dtbuf);
 	Movie_Show_Img(96,16,bmpdu);
 
     if(system_flag_table->myunit.H_W == 0)
@@ -6513,7 +6513,7 @@ void system_setting_item(void)
                 {
                     Movie_Show_Img(0,0,bmp_system_status);
                 }
-                OLED_ShowString12(72,28,"V1.0.5");
+                OLED_ShowString12(72,28,"V1.0.6");
                 sprintf((char *)dtbuf,"%d",system_flag_table->powerdown_timers); //most
                 OLED_ShowString12(72,40,dtbuf);
                 stm_read_eerpom(MENU_FRIST_POWER_INDEX_ADDRES ,&setting_tp);
