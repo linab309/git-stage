@@ -389,39 +389,37 @@ void read_poi_file(void)
 
 
 
-u8 what_is_numbe_10(s32 number_vaule)
+u8 what_is_numbe_10(float number_vaule)
 {
-    if(number_vaule <0)
+    if(number_vaule < 0)
     {
-    	if(number_vaule <= -1000)
+    	if(number_vaule <= -1000.0)
     		return 5;
-    	if(number_vaule <= -100)
+    	if(number_vaule <= -100.0)
     		return 4;
-
-    	if(number_vaule <= -10)
+    	if(number_vaule <= -10.0)
     		return 3;
-    	if(number_vaule <0)
-    		return 3;
+    	if(number_vaule < 0.0)
+    		return 2;
 
     }
     else
     {
-    	if(number_vaule>=100000)
+    	if(number_vaule >= 100000.0)
     		return 6;
-    	if(number_vaule>=10000)
+    	if(number_vaule >= 10000.0)
     		return 5;
-    	if(number_vaule>=1000)
+    	if(number_vaule >= 1000.0)
     		return 4;
-    	if(number_vaule>=100)
+    	if(number_vaule >= 100.0)
     		return 3;
-
-    	if(number_vaule>=10)
+    	if(number_vaule >= 10.0)
     		return 2;
-    	if(number_vaule>=0)
+    	if(number_vaule > 0.0)
     		return 1;
 
     }
-    return 0;
+    return 1;
 
 
 }
