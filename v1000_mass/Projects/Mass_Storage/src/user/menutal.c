@@ -1500,6 +1500,7 @@ void menu_main_display(void)
 {
 
     s16 gpsx_utc;
+    s32 feet = 0;
     float temperature_F;
     u16 year,month,data ,week,hour,min,sec;
 
@@ -1609,9 +1610,9 @@ void menu_main_display(void)
     else  if(system_flag_table->myunit.H_W >= 1)
     {
 
-		gpsx_utc = (floor)(Altitude/10/0.3048);
+		feet = (floor)(Altitude/10/0.3048);
 
-		sprintf((char *)&dtbuf,"%dft",gpsx_utc);	//得到经度字符串
+		sprintf((char *)&dtbuf,"%dft",feet);	//得到经度字符串
     }
 
 	OLED_ShowString(0,16,dtbuf);
@@ -1626,7 +1627,7 @@ void menu_real_speed_display(void)
     float tp;
 
 
-    s16 tmp_Att = 0;
+    s32 tmp_Att = 0;
 
 	OLED_Fill(0, 0, 127, 63, 0);
     menu_status_dispplay();
@@ -1867,8 +1868,6 @@ void menu_real_speed_display(void)
 			Movie_Show_Img(0,16,fangxianbmp45);
 			//Movie_Show_Img(48,48,bmp_worddong);
 			//Movie_Show_Img(64,48,bmp_wordBei);
-
-
 			break;
 		case 4:
 			Movie_Show_Img(0,16,fangxianbmp67);
@@ -1876,7 +1875,6 @@ void menu_real_speed_display(void)
 			//Movie_Show_Img(64,48,bmp_wordBei);
 			//
 			//Movie_Show_Img(80,48,bmp_worddong);
-
 			break;
 		case 5:  //zhengbei
 			Movie_Show_Img(0,16,bmpfangxian90);
@@ -1887,21 +1885,17 @@ void menu_real_speed_display(void)
 			//Movie_Show_Img(48,48,bmp_worddong);
 			//Movie_Show_Img(64,48,bmp_wordnan);
 			//Movie_Show_Img(80,48,bmp_worddong);
-
 			break;
 		case 7: //zhengnan
 			Movie_Show_Img(0,16,bmpfangxian135);
 			//Movie_Show_Img(48,48,bmp_worddong);
 			//Movie_Show_Img(64,48,bmp_wordnan);
-
-
 			break;
 		case 8:
 			Movie_Show_Img(0,16,bmpfangxian157);
 			//Movie_Show_Img(48,48,bmp_wordnan);
 			//Movie_Show_Img(64,48,bmp_wordnan);
 			//Movie_Show_Img(80,48,bmp_worddong);
-
 			break;
 		case 9:  //zhengbei
 			Movie_Show_Img(0,16,bmpfangxian180);
@@ -1912,14 +1906,11 @@ void menu_real_speed_display(void)
 			//Movie_Show_Img(48,48,bmp_wordnan);
 			//Movie_Show_Img(64,48,bmp_wordnan);
 			//Movie_Show_Img(80,48,bmp_wordXi);
-
 			break;
 		case 11: //zhengnan
 			Movie_Show_Img(0,16,bmpfangxian225);
 			//Movie_Show_Img(48,48,bmp_wordXi);
 			//Movie_Show_Img(64,48,bmp_wordnan);
-
-
 			break;
 		case 12:
 			Movie_Show_Img(0,16,bmpfangxian247);
@@ -1936,20 +1927,17 @@ void menu_real_speed_display(void)
 			//Movie_Show_Img(48,48,bmp_wordXi);
 			//Movie_Show_Img(64,48,bmp_wordBei);
 			//Movie_Show_Img(80,48,bmp_wordXi);
-
 			break;
 		case 15: //zhengnan
 			Movie_Show_Img(0,16,bmpfangxian314);
 			//Movie_Show_Img(48,48,bmp_wordXi);
 			//Movie_Show_Img(64,48,bmp_wordBei);
-
 			break;
 		case 16:
 			Movie_Show_Img(0,16,bmpfangxian336);
 			//Movie_Show_Img(48,48,bmp_wordBei);
 			//Movie_Show_Img(64,48,bmp_wordBei);
 			//Movie_Show_Img(80,48,bmp_wordXi);
-
 			break;
 	}
 
