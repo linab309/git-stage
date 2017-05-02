@@ -328,11 +328,12 @@ void Timer_task(void)
                     {
                         system_flag_table->usb_standy_poweron_flag = 1;
                         menu_keyprocess(5);
+#if 0                        
                         if(system_flag_table->guji_record.auto_recoed_flag == 1)
                         {
                             change_to_runmode_recoder(5);
                         }
-
+#endif
                     }
                 }
                 usb_delay_timer_poweroff =0;

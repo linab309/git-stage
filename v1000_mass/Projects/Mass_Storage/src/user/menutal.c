@@ -4272,7 +4272,7 @@ void Recording_guji(void)
                 if(system_flag_table->baifenbi == 0)
                 {
 
-				    if(system_flag_table->guji_record.recoed_meth == 1)
+				    if(1)//system_flag_table->guji_record.recoed_meth == 1)
                     {
 					    guji_mode = RECORED_IDLE;
 					    return ;
@@ -4369,16 +4369,6 @@ void Recording_guji(void)
 			}
 			else
 			{
-//	                if((keyTabIndex == MENU_SETTING_COOR)&&(system_power_flag == 1))
-//	                {
-//	                   OLED_Fill(32, 16, 127, 32, 0);
-//	                   if(system_flag_table->lang == 1)
-//	                       OLED_ShowString(16,16,"Locating.");
-//	                   else
-//	                       Movie_Show_Img(32,16,Bmp_waitsinge);
-//	                }
-
-			    //v1000_debug("\n\r gpsx->fixmode  %d  gpsx->latitude: %d  gpsx->longitude %d \r\n",gpsx->fixmode,gpsx->latitude,gpsx->longitude);
 			}
 			break;
 		case RECORED_T:
@@ -6499,7 +6489,7 @@ void system_setting_item(void)
                 {
                     Movie_Show_Img(0,0,bmp_system_status);
                 }
-                OLED_ShowString12(72,28,"V1.0.6");
+                OLED_ShowString12(72,28,"V1.0.7");
                 sprintf((char *)dtbuf,"%d",system_flag_table->powerdown_timers); //most
                 OLED_ShowString12(72,40,dtbuf);
                 stm_read_eerpom(MENU_FRIST_POWER_INDEX_ADDRES ,&setting_tp);
@@ -7571,6 +7561,10 @@ void menu_keyprocess(u8 key)
                     if(system_flag_table->run_mode == 1)
                         GPS_power_ctrl(1);
      
+                    if(system_flag_table->guji_record.auto_recoed_flag == 1)
+                    {
+                        change_to_runmode_recoder(5);
+                    }
      		    }
     			else
     			{
