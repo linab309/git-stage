@@ -3744,12 +3744,13 @@ void menu_chaoxi_display(void)
 		my_timer.week = RTC_Get_Week(my_timer.w_year ,my_timer.w_month,my_timer.w_date);
 	}
 
-	sprintf((char *)dtbuf,"%02d-%02d-%02d",my_timer.w_year ,my_timer.w_month,my_timer.w_date);	//显示UTC日期
+	sprintf((char *)dtbuf,"%02d-%02d-%02d",RTC_DateStructure.RTC_Year ,my_timer.w_month,my_timer.w_date);	//显示UTC日期
 	OLED_ShowString(0,48,dtbuf);
-   
+	sprintf((char *)dtbuf,"  ");	//显示UTC日期
+   	OLED_ShowString(64,48,dtbuf);
 	test_sunriset(my_timer.w_year ,my_timer.w_month,my_timer.w_date,tp_long,tp_lati);
 	moon_test(tp_long,tp_lati,my_timer.w_year ,my_timer.w_month,my_timer.w_date,time_zone);
-      	sprintf((char *)dtbuf,"%c%c%c",week_word[my_timer.week][0],week_word[my_timer.week][1],week_word[my_timer.week][2]);
+    sprintf((char *)dtbuf,"%c%c%c",week_word[my_timer.week][0],week_word[my_timer.week][1],week_word[my_timer.week][2]);
 	OLED_ShowString(86,48,dtbuf);
 
 }
