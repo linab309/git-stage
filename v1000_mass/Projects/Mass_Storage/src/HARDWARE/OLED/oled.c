@@ -57,7 +57,7 @@ void OLED_Refresh_Gram(void)
 			//	 else
 				 	{
 //				 	if((system_power_flag == 2)&&(n>=39)&&(system_flag_table->run_mode == 0))
-				 		{
+				 		{
 	//			 		OLED_WR_Byte(0x00,OLED_DATA); 
 				 		}
 		//			else

@@ -337,7 +337,7 @@ void RTC_TimeRegulate(void)
 }
 //rtc_set(13,09,30,09,19,28,1)
 void  rtc_set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec,u8 week)
-{
+{
 
 
 	v1000_debug("rtc_set %d-%d-%d  %d:%d:%d %d\n",syear ,smon,sday,hour,min,sec,week);

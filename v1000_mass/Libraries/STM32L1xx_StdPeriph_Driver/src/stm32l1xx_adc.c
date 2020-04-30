@@ -289,7 +289,7 @@ void ADC_StructInit(ADC_InitTypeDef* ADC_InitStruct)
   /* Initialize the ADC_ScanConvMode member */
   ADC_InitStruct->ADC_ScanConvMode = DISABLE;
 
-  /* Initialize the ADC_ContinuousConvMode member */
+  /* Initialize the ADC_ContinuousConvM\ode member */
   ADC_InitStruct->ADC_ContinuousConvMode = DISABLE;
 
   /* Initialize the ADC_ExternalTrigConvEdge member */
@@ -425,7 +425,7 @@ void ADC_BankSelection(ADC_TypeDef* ADCx, uint8_t ADC_Bank)
   * @note   ADC power-on and power-off can be managed by hardware to cut the 
   *         consumption when the ADC is not converting.
   * @param  ADCx: where x can be 1 to select the ADC1 peripheral.
-  * @param  ADC_PowerDown: The ADC power down configuration.
+  * @param  ADC_PowerDown: The ADC power down configurInstance->SR ation.
   *         This parameter can be one of the following values:
   *     @arg ADC_PowerDown_Delay:      ADC is powered down during delay phase.
   *     @arg ADC_PowerDown_Idle:       ADC is powered down during Idle phase.

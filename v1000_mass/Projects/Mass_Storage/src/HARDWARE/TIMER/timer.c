@@ -533,7 +533,7 @@ void powerlow_proess(void)
                 system_power_flag = 2;
             OLED_Refresh_Gram();
         }
-    }
+    }
 }
 
 u8 handler_timer_1s(void)
