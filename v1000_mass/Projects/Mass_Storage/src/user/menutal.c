@@ -4,7 +4,7 @@
 **
 ** \version     $Id$
 **
-** \brief       ¸÷¼¶²Ëµ¥¿ØÖÆÏî
+** \brief       ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 **
 ** \attention   THIS SAMPLE CODE IS PROVIDED AS IS. GOKE MICROELECTRONICS
 **              ACCEPTS NO RESPONSIBILITY OR LIABILITY FOR ANY ERRORS OR
@@ -18,7 +18,7 @@
 * Author           : jianjian
 * Version            : V1.0
 * Date               : 08/26/2013
-* Description       ://CÓïÑÔ²Ëµ¥Éè¼Æ
+* Description       ://Cï¿½ï¿½ï¿½Ô²Ëµï¿½ï¿½ï¿½ï¿½
 */
 #include "sys.h"
 //#include "stm32l1xx.h"
@@ -47,21 +47,21 @@
 
 
 #if 0
-uc8 menu1[]  ={"1,ÊµÊ±ÐÅÏ¢Ò³"};
-uc8 menu2[]  ={"2,×ø±êÒ³"};
-uc8 menu3[]  ={"3,Êý¾Ý±ä»¯Ò³"};
-uc8 menu4[]  ={"4,Àï³ÌÐÅÏ¢Ò³"};
-uc8 menu5[]  ={"5,ÎÀÐÇÐÅÏ¢"};
-uc8 menu6[]  ={"6,ÇçÓê±í"};
-uc8 menu7[]  ={"7.³±Ï«±í"};
-uc8 menu8[]  ={"8.ÉèÖÃ²Ëµ¥"};
-uc8 menu8_a[]  ={"1,.×ø±ê±íÊ¾·½Ê½"};
-uc8 menu8_b[] ={"2,¾àÀëµ¥Î»"};
-uc8 menu8_c[] ={"3,ÎÂ¶Èµ¥Î»"};
-uc8 menu8_d[] ={"4,¼ÇÂ¼¼ä¸ô"};
-uc8 menu8_e[] ={"5,×Ô¶¨ÒåÏÔÊ¾Ò³Ãæ"};
-uc8 menu8_f[] ={"6,¸ü¸ÄÏµÍ³ÓïÑÔ"};
-uc8 menu8_g[] ={"7,Ê±ÇøÉèÖÃ"};
+uc8 menu1[]  ={"1,ÊµÊ±ï¿½ï¿½Ï¢Ò³"};
+uc8 menu2[]  ={"2,ï¿½ï¿½ï¿½ï¿½Ò³"};
+uc8 menu3[]  ={"3,ï¿½ï¿½ï¿½Ý±ä»¯Ò³"};
+uc8 menu4[]  ={"4,ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢Ò³"};
+uc8 menu5[]  ={"5,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢"};
+uc8 menu6[]  ={"6,ï¿½ï¿½ï¿½ï¿½ï¿½"};
+uc8 menu7[]  ={"7.ï¿½ï¿½Ï«ï¿½ï¿½"};
+uc8 menu8[]  ={"8.ï¿½ï¿½ï¿½Ã²Ëµï¿½"};
+uc8 menu8_a[]  ={"1,.ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ê½"};
+uc8 menu8_b[] ={"2,ï¿½ï¿½ï¿½ëµ¥Î»"};
+uc8 menu8_c[] ={"3,ï¿½Â¶Èµï¿½Î»"};
+uc8 menu8_d[] ={"4,ï¿½ï¿½Â¼ï¿½ï¿½ï¿½"};
+uc8 menu8_e[] ={"5,ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ò³ï¿½ï¿½"};
+uc8 menu8_f[] ={"6,ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½"};
+uc8 menu8_g[] ={"7,Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"};
 #endif
 
 
@@ -91,10 +91,10 @@ uc8 menu8_g[] ={"7,Ê±ÇøÉèÖÃ"};
 
 typedef struct
 {
-	u32 latitude;				//Î³¶È ·ÖÀ©´ó100000±¶,Êµ¼ÊÒª³ýÒÔ100000
-	u8 nshemi;					//±±Î³/ÄÏÎ³,N:±±Î³;S:ÄÏÎ³				  
-	u32 longitude;			    //¾­¶È ·ÖÀ©´ó100000±¶,Êµ¼ÊÒª³ýÒÔ100000
-	u8 ewhemi;					//¶«¾­/Î÷¾­,E:¶«¾­;W:Î÷¾­
+	u32 latitude;				//Î³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½100000ï¿½ï¿½,Êµï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½100000
+	u8 nshemi;					//ï¿½ï¿½Î³/ï¿½ï¿½Î³,N:ï¿½ï¿½Î³;S:ï¿½ï¿½Î³				  
+	u32 longitude;			    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½100000ï¿½ï¿½,Êµï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½100000
+	u8 ewhemi;					//ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½,E:ï¿½ï¿½ï¿½ï¿½;W:ï¿½ï¿½ï¿½ï¿½
 }HomeGpsStruct;
 
 static HomeGpsStruct homex = {0};
@@ -103,15 +103,15 @@ static u8 home_flag = 0;
 #define CUSTOM_HOME_POST 12
 
 
-__align(4) u8 dtbuf[50];   								//´òÓ¡»º´æÆ÷
+__align(4) u8 dtbuf[50];   								//ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 u8 rtc_set_flag= 1;
-//extern u8 ge,shi,bai,qian,wan,shiwan;           //ÏÔÊ¾±äÁ¿
+//extern u8 ge,shi,bai,qian,wan,shiwan;           //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 extern u32 average_speed;
 extern int16_t  temperature;
 extern long  pressure;
-extern long Altitude;											//º£°Î¸ß¶È
+extern long Altitude;											//ï¿½ï¿½ï¿½Î¸ß¶ï¿½
 u8 upload = 0;
 u8 enter_perss= 0;
 float time_zone = 8;
@@ -233,19 +233,19 @@ typedef union { /* FPC_Reg6964_Dat6 */
 
 typedef struct
 {
-     u8 MenuID;      //±¾²Ëµ¥×´Ì¬Ë÷ÒýºÅ
-     u8 ParMenuID;    //¸¸²Ëµ¥×´Ì¬Ë÷ÒýºÅ
-     u8 *MenuName;  //²Ëµ¥ÎÄ±¾ÄÚÈÝ
-     void (*CurrentOperate)(void); //±¾²Ëµ¥µÄ¹¦ÄÜº¯Êý
-     u8 subnumber;      //±¾²Ëµ¥×´Ì¬Ë÷ÒýºÅ
+     u8 MenuID;      //ï¿½ï¿½ï¿½Ëµï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     u8 ParMenuID;    //ï¿½ï¿½ï¿½Ëµï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     u8 *MenuName;  //ï¿½Ëµï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
+     void (*CurrentOperate)(void); //ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ä¹ï¿½ï¿½Üºï¿½ï¿½ï¿½
+     u8 subnumber;      //ï¿½ï¿½ï¿½Ëµï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }KeyTabStruct;
-//²Ëµ¥±í£¬
+//ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 
 const KeyTabStruct KeyTab[MAX_KEYTABSTRUCT_NUM] =
  {
-// ²Ëµ¥ID                ¸¸²Ëµ¥ID       ²Ëµ¥Ãû        ²Ëµ¥¹¦ÄÜº¯Êý
+// ï¿½Ëµï¿½ID                ï¿½ï¿½ï¿½Ëµï¿½ID       ï¿½Ëµï¿½ï¿½ï¿½        ï¿½Ëµï¿½ï¿½ï¿½ï¿½Üºï¿½ï¿½ï¿½
 // MenuID,              ParMenuID,     MenuName,      CurFunction
 	{MENU_MAIN, 0, NULL, menu_main_display,0},
 	{MENU_COORDINATES, 0, NULL, menu_real_speed_display,0},
@@ -667,9 +667,9 @@ void show_levev_space(void)
     else
     {      
         if(USB_CONNECT == 1)
-			sprintf((char *)dtbuf,"--");		    		//µÃµ½ËÙ¶È×Ö·û´®
+			sprintf((char *)dtbuf,"--");		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	    else
-            sprintf((char *)dtbuf,"%02d",system_flag_table->baifenbi);		    		//µÃµ½ËÙ¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%02d",system_flag_table->baifenbi);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         OLED_ShowString(103,0,dtbuf);
         OLED_ShowChar(119, 0, '%', 16, 1);
     }    
@@ -961,16 +961,16 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
 	    if(mode == 1 )
 		{
     		if(miao<100)
-    			sprintf((char *)dtbuf,"%1c  %.6f",flag,miao);	//µÃµ½¾­¶È×Ö·û´®
+    			sprintf((char *)dtbuf,"%1c  %.6f",flag,miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		else
-    			sprintf((char *)dtbuf,"%1c %.6f",flag,miao);	//µÃµ½¾­¶È×Ö·û´®
+    			sprintf((char *)dtbuf,"%1c %.6f",flag,miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		}
 	    else
 		{
     		if(miao<100)
-    			sprintf((char *)dtbuf," %1c %.6f",flag,miao);	//µÃµ½¾­¶È×Ö·û´®
+    			sprintf((char *)dtbuf," %1c %.6f",flag,miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		else
-    			sprintf((char *)dtbuf," %1c%.6f",flag,miao);	//µÃµ½¾­¶È×Ö·û´®
+    			sprintf((char *)dtbuf," %1c%.6f",flag,miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
 		}
 
@@ -989,11 +989,11 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
         {
             if(du >100)
             {
-                sprintf((char *)dtbuf,"%1c %03d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf,"%1c %03d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             }
             else
             {
-                sprintf((char *)dtbuf,"%1c  %02d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf,"%1c  %02d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
             }
          }
@@ -1001,11 +1001,11 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
          {
              if(du >100)
              {
-                sprintf((char *)dtbuf," %1c%03d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf," %1c%03d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
              }
              else
              {
-                sprintf((char *)dtbuf," %1c %02d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf," %1c %02d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
      
              }
 
@@ -1016,9 +1016,9 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
          Movie_Show_Img(index,y,bmpdu);
      
          if(miao<10)
-            sprintf((char *)dtbuf,"0%.3f",miao);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"0%.3f",miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
          else
-            sprintf((char *)dtbuf,"%.3f",miao);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%.3f",miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
          index += 8;
          OLED_ShowString(index,y,dtbuf);
          index =112;
@@ -1044,11 +1044,11 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
         {
             if(du >100)
             {
-            sprintf((char *)dtbuf,"%1c %03d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%1c %03d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             }
             else
             {
-            sprintf((char *)dtbuf,"%1c  %02d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%1c  %02d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
             }
         }
@@ -1056,11 +1056,11 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
         {
             if(du >100)
             {
-                sprintf((char *)dtbuf," %1c%03d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf," %1c%03d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             }
             else
             {
-                sprintf((char *)dtbuf," %1c %02d",flag,du);	//µÃµ½¾­¶È×Ö·û´®
+                sprintf((char *)dtbuf," %1c %02d",flag,du);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
             }
 
@@ -1072,15 +1072,15 @@ void convert_show_en(float tp,u8 flag,u8 y,u8 mode)
         index +=0;
         Movie_Show_Img(index,y,bmpdu);
         index += 8;
-        sprintf((char *)dtbuf,"%02d",fen);	//µÃµ½¾­¶È×Ö·û´®
+        sprintf((char *)dtbuf,"%02d",fen);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         OLED_ShowString(index,y,dtbuf);
         index +=16;
         Movie_Show_Img(index,y,bmpfen);
         index += 8;
         if(miao<10.0)
-            sprintf((char *)dtbuf,"0%.1f",miao);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"0%.1f",miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         else
-            sprintf((char *)dtbuf,"%.1f",miao);	//µÃµ½¾­¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%.1f",miao);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         OLED_ShowString(index,y,dtbuf);
         index =120;
         Movie_Show_Img(index,y,bmpmaio);
@@ -1092,7 +1092,7 @@ void convert_show_en_input(u8 *prt_c ,u8 y)
 
 	u8 index;
 
-	sprintf((char *)dtbuf,"%1c%c%c%c",prt_c[0],prt_c[1],prt_c[2],prt_c[3]);	//µÃµ½¾­¶È×Ö·û´®
+	sprintf((char *)dtbuf,"%1c%c%c%c",prt_c[0],prt_c[1],prt_c[2],prt_c[3]);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	index = 56;
 
 	//v1000_debug("\r\n du: %d  %d %d \n\n",du,fen,miao);
@@ -1100,12 +1100,12 @@ void convert_show_en_input(u8 *prt_c ,u8 y)
 	index +=0;
 	Movie_Show_Img(index,y,bmpdu);
 	index += 8;
-	sprintf((char *)dtbuf,"%c%c",prt_c[4],prt_c[5]);	//µÃµ½¾­¶È×Ö·û´®
+	sprintf((char *)dtbuf,"%c%c",prt_c[4],prt_c[5]);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	OLED_ShowString(index,y,dtbuf);
 	index +=16;
 	Movie_Show_Img(index,y,bmpfen);
 	index += 8;
-	sprintf((char *)dtbuf,"%c%c.%c",prt_c[6],prt_c[7],prt_c[8]);	//µÃµ½¾­¶È×Ö·û´®
+	sprintf((char *)dtbuf,"%c%c.%c",prt_c[6],prt_c[7],prt_c[8]);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	OLED_ShowString(index,y,dtbuf);
 	index =120;
 	Movie_Show_Img(index,y,bmpmaio);
@@ -1144,7 +1144,7 @@ void menu_real_crood_display(void)
     }
     tp =gpsx->pdop;
     tp =tp/100;
-    sprintf((char *)dtbuf,"%0.1f",tp);	//ÏÔÊ¾UTCÈÕÆÚ
+    sprintf((char *)dtbuf,"%0.1f",tp);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
     OLED_ShowString(72, 48, dtbuf);
 
     if(gpsx->fixmode == 3)
@@ -1326,13 +1326,13 @@ void menu_status_dispplay(void)
 			    if(gpsx_utc/60>=10)
 			 	{
 				    Movie_Show_Img(1,19,Bmp_bigpm_1);
-			 	    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60-10,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+			 	    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60-10,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 			 	}
 			    else
 			 	{
 
 			 	    Movie_Show_Img(1,19,Bmp_bigpm);
-		 		    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+		 		    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 
 			 	}
 			    OLED_ShowString_24(16,19,dtbuf);
@@ -1341,17 +1341,17 @@ void menu_status_dispplay(void)
             {
                 if(gpsx_utc/60>=10)
                 {
-                    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60-10,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+                    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60-10,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
                     Movie_Show_Img(1,19,Bmp_bigam_1);
                 }
                 else if(gpsx_utc < 60)
                 {
-                    sprintf((char *)dtbuf,"%d:%02d:%02d",2,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+                    sprintf((char *)dtbuf,"%d:%02d:%02d",2,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
                     Movie_Show_Img(1,19,Bmp_bigam_1);
                 }
                 else
                 {
-                    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+                    sprintf((char *)dtbuf,"%d:%02d:%02d",gpsx_utc/60,gpsx_utc%60,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
                     Movie_Show_Img(1,19,Bmp_bigam);
                 }
                 OLED_ShowString_24(16,19,dtbuf);
@@ -1359,7 +1359,7 @@ void menu_status_dispplay(void)
 	 	}
 		else
 		{
-            sprintf((char *)dtbuf,"%02d:%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes,RTC_TimeStructure.RTC_Seconds);	//ÏÔÊ¾UTCÈÕÆÚ
+            sprintf((char *)dtbuf,"%02d:%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes,RTC_TimeStructure.RTC_Seconds);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
             OLED_ShowString_24(0,19,dtbuf);			
 		}
 
@@ -1412,7 +1412,7 @@ void menu_status_dispplay(void)
 	 			    Movie_Show_Img(34,0,Bm_pm);
 				    if(gpsx_utc>=13*60)
 			 	    	gpsx_utc= gpsx_utc - 12*60;
-		 		    sprintf((char *)dtbuf,"%02d:%02d",gpsx_utc/60,gpsx_utc%60);	//ÏÔÊ¾UTCÈÕÆÚ
+		 		    sprintf((char *)dtbuf,"%02d:%02d",gpsx_utc/60,gpsx_utc%60);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 				     OLED_ShowString_head(0,0,dtbuf);
 
 			 	}
@@ -1420,16 +1420,16 @@ void menu_status_dispplay(void)
 			 	{
 				    Movie_Show_Img(34,0,Bmp_am);
 			        if(gpsx_utc>60)
-			 	    	sprintf((char *)dtbuf,"%02d:%02d",gpsx_utc/60,gpsx_utc%60);	//ÏÔÊ¾UTCÈÕÆÚ
+			 	    	sprintf((char *)dtbuf,"%02d:%02d",gpsx_utc/60,gpsx_utc%60);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 			 	    else
-					    sprintf((char *)dtbuf,"%02d:%02d",12,gpsx_utc%60);	//ÏÔÊ¾UTCÈÕÆÚ
+					    sprintf((char *)dtbuf,"%02d:%02d",12,gpsx_utc%60);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 				     OLED_ShowString_head(0,0,dtbuf);
 
 			 	}
 		 	}
 		    else
 			{
-			    sprintf((char *)dtbuf,"%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes);	//ÏÔÊ¾UTCÈÕÆÚ
+			    sprintf((char *)dtbuf,"%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 			    OLED_ShowString_head(0,0,dtbuf);
 
 			}
@@ -1520,13 +1520,13 @@ void menu_main_display(void)
 	switch(system_flag_table->myunit.DATA)
     {
 		case 0:
-		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",year,month,data);	//ÏÔÊ¾UTCÈÕÆÚ
+		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",year,month,data);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 		 	break;
 		case 1:
-		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",month,data,year);	//ÏÔÊ¾UTCÈÕÆÚ
+		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",month,data,year);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 		 	break;
 		case 2:
-		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",data,month,year);	//ÏÔÊ¾UTCÈÕÆÚ
+		 	sprintf((char *)dtbuf,"%02d-%02d-%02d",data,month,year);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 		 	break;
 
 	}
@@ -1536,7 +1536,7 @@ void menu_main_display(void)
 	gpsx_utc = (hour*60+min);
 	if(system_flag_table->myunit.TIMER == 1)
 	{
-		sprintf((char *)dtbuf,"%02d:%02d:%02d",hour,min,sec);	//ÏÔÊ¾UTCÊ±¼ä
+		sprintf((char *)dtbuf,"%02d:%02d:%02d",hour,min,sec);	//ï¿½ï¿½Ê¾UTCÊ±ï¿½ï¿½
 	  	OLED_ShowString(0,32,dtbuf);
 	}
 	else
@@ -1567,14 +1567,14 @@ void menu_main_display(void)
 		{
 		comp_time = (gpsx_utc-rtc_timer)/60;
 //		time_zone = comp_time;
-		sprintf((char *)dtbuf,"+%02d:%02d",comp_time,(gpsx_utc-rtc_timer-(comp_time*60)));	//ÏÔÊ¾UTCÊ±¼ä
+		sprintf((char *)dtbuf,"+%02d:%02d",comp_time,(gpsx_utc-rtc_timer-(comp_time*60)));	//ï¿½ï¿½Ê¾UTCÊ±ï¿½ï¿½
 		}
 	else
 
 		{
 		comp_time = (rtc_timer-gpsx_utc)/60;
 //		time_zone = comp_time;
-		sprintf((char *)dtbuf,"+%02d:%02d",comp_time,(rtc_timer-gpsx_utc-(comp_time*60)));	//ÏÔÊ¾UTCÊ±¼ä
+		sprintf((char *)dtbuf,"+%02d:%02d",comp_time,(rtc_timer-gpsx_utc-(comp_time*60)));	//ï¿½ï¿½Ê¾UTCÊ±ï¿½ï¿½
 		}
 #endif
 
@@ -1590,13 +1590,13 @@ void menu_main_display(void)
 	if(system_flag_table->myunit.TEMP == 0)
 	{
 
-        sprintf((char *)dtbuf,"%.1f C",temperature_F/10);	//µÃµ½¾­¶È×Ö·û´®
+        sprintf((char *)dtbuf,"%.1f C",temperature_F/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
 	}
 	else if(system_flag_table->myunit.TEMP == 1)
 	{
         temperature_F = 320 + (1.8*temperature);
-        sprintf((char *)dtbuf,"%.1f F",temperature_F/10);	//µÃµ½¾­¶È×Ö·û´®
+        sprintf((char *)dtbuf,"%.1f F",temperature_F/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
 	}
 
@@ -1605,14 +1605,14 @@ void menu_main_display(void)
 
     if(system_flag_table->myunit.H_W == 0)
     {
-	    sprintf((char *)&dtbuf,"%dm",Altitude/10);	//µÃµ½¾­¶È×Ö·û´®
+	    sprintf((char *)&dtbuf,"%dm",Altitude/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     }
     else  if(system_flag_table->myunit.H_W >= 1)
     {
 
 		feet = (floor)(Altitude/10/0.3048);
 
-		sprintf((char *)&dtbuf,"%dft",feet);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)&dtbuf,"%dft",feet);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     }
 
 	OLED_ShowString(0,16,dtbuf);
@@ -1639,24 +1639,24 @@ void menu_real_speed_display(void)
 		tp = 0;
 
 	if(system_flag_table->myunit.H_W == 0)//||(system_flag_table->myunit.H_W == 1))
-	 	sprintf((char *)dtbuf,"%.1fkm/h",tp/1000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+	 	sprintf((char *)dtbuf,"%.1fkm/h",tp/1000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
 #if 1
 	else if(system_flag_table->myunit.H_W == 1)
-	 	sprintf((char *)dtbuf,"%.1fmi/h",tp/1609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+	 	sprintf((char *)dtbuf,"%.1fmi/h",tp/1609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 #endif
 	else if(system_flag_table->myunit.H_W == 2)
-	 	sprintf((char *)dtbuf,"%.1fkt/h",tp/1852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+	 	sprintf((char *)dtbuf,"%.1fkt/h",tp/1852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
  	OLED_ShowString(48,16,dtbuf);
 
     if(system_flag_table->myunit.H_W == 0)
 	{
-	    sprintf((char *)&dtbuf,"%dm",Altitude/10);	//µÃµ½¾­¶È×Ö·û´®
+	    sprintf((char *)&dtbuf,"%dm",Altitude/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	}
     else  if(system_flag_table->myunit.H_W >= 1)
     {
         tmp_Att= (floor)(Altitude/10/0.3048);
-        sprintf((char *)&dtbuf,"%dft",tmp_Att);	//µÃµ½¾­¶È×Ö·û´®
+        sprintf((char *)&dtbuf,"%dft",tmp_Att);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     }
 
 	OLED_ShowString(48,32,dtbuf);
@@ -1667,11 +1667,11 @@ void menu_real_speed_display(void)
 	tp /=1000;
 
 	if(tp <10)
-		sprintf((char *)dtbuf,"   %d",(u16)tp);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"   %d",(u16)tp);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	else if(tp <100)
-		sprintf((char *)dtbuf,"  %d",(u16)tp);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"  %d",(u16)tp);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	else
-		sprintf((char *)dtbuf," %d",(u16)tp);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf," %d",(u16)tp);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 
  	OLED_ShowString(88,48,dtbuf);
 	Movie_Show_Img(120,48,bmpdu);
@@ -1995,22 +1995,22 @@ void menu_temp_change_display(void)
 
 	/*
 	
-	´«¸ÐÆ÷Ä£Ê½£ºÏÔÊ¾ÎÂ¶È=´«¸ÐÆ÷²âµÃÎÂ¶È - |²âµÃÎÂ¶È*0.1|
-	GPSÄ£Ê½£ºÏÔÊ¾ÎÂ¶È=²âµÃÎÂ¶È - |²âµÃÎÂ¶È*0.22|
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Â¶ï¿½=ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶ï¿½ - |ï¿½ï¿½ï¿½ï¿½Â¶ï¿½*0.1|
+	GPSÄ£Ê½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Â¶ï¿½=ï¿½ï¿½ï¿½ï¿½Â¶ï¿½ - |ï¿½ï¿½ï¿½ï¿½Â¶ï¿½*0.22|
 	*/
 	if(system_flag_table->myunit.TEMP == 0)
 	{
 
 
-		sprintf((char *)dtbuf,"%.1f C",temperature_F/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f C",temperature_F/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString((65),0,dtbuf);
 		Movie_Show_Img((80+what_is_numbe_10(temperature_F/10)*8),0,bmpdu);
 
-		sprintf((char *)dtbuf,"%d",most_temperature/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",most_temperature/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		
 		OLED_ShowString12(0,16,dtbuf);
 
-		sprintf((char *)dtbuf,"%d",lest_temperature/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",lest_temperature/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 
 	}
@@ -2019,15 +2019,15 @@ void menu_temp_change_display(void)
 
 		temperature_F = 320+(1.8*temperature);
 
-		sprintf((char *)dtbuf,"%.1f F",temperature_F/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f F",temperature_F/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString((65),0,dtbuf);
 		Movie_Show_Img((80+what_is_numbe_10(temperature_F/10)*8),0,bmpdu);
 
 		temp = (int)(320+(1.8*most_temperature));
-		sprintf((char *)dtbuf,"%d",temp/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",temp/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		temp = (int)(320+(1.8*lest_temperature));
-		sprintf((char *)dtbuf,"%d",temp/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",temp/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 
@@ -2132,53 +2132,53 @@ void menu_Pressure_display(void)
     {
 
 		pressure_unit = pressure;
-		sprintf((char *)dtbuf,"%.1fhpa",pressure_unit/100);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1fhpa",pressure_unit/100);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(57,0,dtbuf);
 	
-		sprintf((char *)dtbuf,"%d",(int)(most_pressure/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(most_pressure/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 	
-		sprintf((char *)dtbuf,"%d",(int)(lest_pressure/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(lest_pressure/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 	else if(system_flag_table->myunit.PREE == 1)
 	{
 
 	    pressure_unit = pressure;
-		sprintf((char *)dtbuf,"%.1fmba",pressure_unit/100);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1fmba",pressure_unit/100);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(57,0,dtbuf);
 	
-		sprintf((char *)dtbuf,"%d",(int)(most_pressure/100));	//µÃµ½¾­¶È×Ö·û´®®
+		sprintf((char *)dtbuf,"%d",(int)(most_pressure/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 
-		sprintf((char *)dtbuf,"%d",(int)(lest_pressure/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(lest_pressure/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 	else if(system_flag_table->myunit.PREE == 2)
 	{
 		pressure_unit = pressure/1.333;
 		
-		sprintf((char *)dtbuf,"%.1fmmhg",pressure_unit/100);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1fmmhg",pressure_unit/100);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(57,0,dtbuf);
 		pressure_unit = most_pressure/1.333;
 		
-		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		pressure_unit = lest_pressure/1.333;
 		conversion(pressure_unit);
-		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 	else if(system_flag_table->myunit.PREE == 3)
 	{
 		pressure_unit = pressure/33.864;
-		sprintf((char *)dtbuf,"%.2fmmhg",pressure_unit/100);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.2finhg",pressure_unit/100);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(57,0,dtbuf);
 		pressure_unit = most_pressure/33.864;
-		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		pressure_unit = lest_pressure/33.864;
-		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%d",(int)(pressure_unit/100));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 
@@ -2276,25 +2276,25 @@ void menu_arruite_change_display(void)
 
     if(system_flag_table->myunit.H_W == 0)
     {
-		sprintf((char *)&dtbuf,"%ldm",Altitude/10);	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)&dtbuf,"%ldm",Altitude/10);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(65,0,dtbuf);
 
-		sprintf((char *)dtbuf,"%ld",most_Altitude/10);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%ld",most_Altitude/10);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 
-		sprintf((char *)dtbuf,"%ld",lest_Altitude/10);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%ld",lest_Altitude/10);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	//	v1000_debug("\r\nlest_Altitude= %ld",lest_Altitude);
      }
      else  if(system_flag_table->myunit.H_W >= 1)
      {
-		sprintf((char *)&dtbuf,"%.0fft",(Altitude/3.048));	//µÃµ½¾­¶È×Ö·û´®
+		sprintf((char *)&dtbuf,"%.0fft",(Altitude/3.048));	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(65,0,dtbuf);
 
-		sprintf((char *)dtbuf,"%.0f",(most_Altitude/3.048));		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.0f",(most_Altitude/3.048));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 
-		sprintf((char *)dtbuf,"%.0f",lest_Altitude/3.048);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.0f",lest_Altitude/3.048);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 
      }
@@ -2398,38 +2398,38 @@ void menu_speed_change_display(void)
 
 	if(system_flag_table->myunit.H_W == 0)
 	{
-		sprintf((char *)dtbuf,"%dkm/h",(u32)tp/1000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%dkm/h",(u32)tp/1000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(70,0,dtbuf);
 		tp=most_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		tp=lest_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 	}
 	else if(system_flag_table->myunit.H_W == 1)
 	{
 
-		sprintf((char *)dtbuf,"%dmi/h",(u32)tp/1609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%dmi/h",(u32)tp/1609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(70,0,dtbuf);
 		tp=most_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		tp=lest_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 
 	}
 	else if(system_flag_table->myunit.H_W == 2)
 	{
 
-		sprintf((char *)dtbuf,"%dkt/h",(u32)tp/1852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%dkt/h",(u32)tp/1852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString(70,0,dtbuf);
 		tp=most_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,16,dtbuf);
 		tp=lest_speed;
-		sprintf((char *)dtbuf,"%.1f",tp/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+		sprintf((char *)dtbuf,"%.1f",tp/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 		OLED_ShowString12(0,46,dtbuf);
 
 	}
@@ -2538,7 +2538,7 @@ void menu_3D_display(void)
 //	show_levev_space();
 	OLED_Fill(0, 0, 127, 63, 0);
 	menu_status_dispplay();
-//	sprintf((char *)dtbuf,"%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes);	//ÏÔÊ¾UTCÈÕÆÚ
+//	sprintf((char *)dtbuf,"%02d:%02d",RTC_TimeStructure.RTC_Hours,RTC_TimeStructure.RTC_Minutes);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 //	OLED_ShowString_head(0,0,dtbuf);
 
 //	OLED_Fill(0, 16, 127, 63, 0);
@@ -3306,31 +3306,31 @@ void menu_home_display(void)
     		if(system_flag_table->myunit.H_W == 0)
     		{
     			if(distance>=10 && distance<100)
-    				sprintf((char *)dtbuf,"%.2fkm",distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.2fkm",distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else if (distance<10)
-    				sprintf((char *)dtbuf,"%.3fkm",distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.3fkm",distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else
-    				sprintf((char *)dtbuf,"%ldkm",(u32)(distance));		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%ldkm",(u32)(distance));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		}
     		else if(system_flag_table->myunit.H_W == 1)
     		{
     			if((distance/1.609)>=10 && (distance/1.609)<100)
-    				sprintf((char *)dtbuf,"%.2fmi",distance/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.2fmi",distance/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else if ((distance/1.609)<10)
-    				sprintf((char *)dtbuf,"%.3fmi",distance/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.3fmi",distance/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else
-    				sprintf((char *)dtbuf,"%ldmi",(u32)(distance/1.609));		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%ldmi",(u32)(distance/1.609));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
                
     		}
 
     		else if(system_flag_table->myunit.H_W == 2)
     		{
     			if((distance/1.852)>=10 && (distance/1.852)<100)
-    				sprintf((char *)dtbuf,"%.2fkt",distance/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.2fkt",distance/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else if ((distance/1.852)<10)
-    				sprintf((char *)dtbuf,"%.3fkt",distance/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%.3fkt",distance/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     			else
-    				sprintf((char *)dtbuf,"%ldkt",(u32)(distance/1.852));		    		//µÃµ½ËÙ¶È×Ö·û´®
+    				sprintf((char *)dtbuf,"%ldkt",(u32)(distance/1.852));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     
     		}
 
@@ -3357,25 +3357,25 @@ void menu_home_display(void)
     	if(system_flag_table->myunit.H_W == 0)//||(system_flag_table->myunit.H_W == 1))
     	{
     		if(tp/1000>=100.0)
-    			sprintf((char *)dtbuf,"%.0fkm/h",tp/=1000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    			sprintf((char *)dtbuf,"%.0fkm/h",tp/=1000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		else
-    		 	sprintf((char *)dtbuf,"%.1fkm/h",tp/=1000);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    		 	sprintf((char *)dtbuf,"%.1fkm/h",tp/=1000);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     	}
 
     	else if(system_flag_table->myunit.H_W == 1)
     	{
     		if(tp/1609>=100.0)
-    			sprintf((char *)dtbuf,"%.0fmi/h",tp/=1609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    			sprintf((char *)dtbuf,"%.0fmi/h",tp/=1609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		else
-    		 	sprintf((char *)dtbuf,"%.1fmi/h",tp/=1609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    		 	sprintf((char *)dtbuf,"%.1fmi/h",tp/=1609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     	}
 
     	else if(system_flag_table->myunit.H_W == 2)
     	{
     		if(tp/1852>=100.0)
-    			sprintf((char *)dtbuf,"%.0fkt/h",tp/=1852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    			sprintf((char *)dtbuf,"%.0fkt/h",tp/=1852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		else
-    		 	sprintf((char *)dtbuf,"%.1fkt/h",tp/=1852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    		 	sprintf((char *)dtbuf,"%.1fkt/h",tp/=1852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     	}
     
     	OLED_ShowString(48,32,dtbuf);
@@ -3397,7 +3397,7 @@ void menu_home_display(void)
         {
             timer_need = 0;
         }        
-        sprintf((char *)dtbuf,"%02d:%02d",timer_need/60,timer_need%60);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        sprintf((char *)dtbuf,"%02d:%02d",timer_need/60,timer_need%60);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     //	v1000_debug("\r\n timer_need1  %d %d  ",timer_need/60,timer_need%60);
     
     	OLED_ShowString(80,48,dtbuf);
@@ -3476,35 +3476,35 @@ void menu_home_display(void)
     				    if(system_flag_table->myunit.H_W == 0)
     					{
         					if(distance>=10 && distance<100)
-        						sprintf((char *)dtbuf,"%.2fkm",distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.2fkm",distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else if (distance<10)
-        						sprintf((char *)dtbuf,"%.3fkm",distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.3fkm",distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else
-        						sprintf((char *)dtbuf,"%ldkm",(u32)(distance));		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%ldkm",(u32)(distance));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     					}
     				    else if(system_flag_table->myunit.H_W == 1)
     					{
         					if((distance/1.609)>=10 && (distance/1.609)<100)
-        						sprintf((char *)dtbuf,"%.2fmi",distance/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.2fmi",distance/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else if ((distance/1.609)<10)
-        						sprintf((char *)dtbuf,"%.3fmi",distance/1.609);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.3fmi",distance/1.609);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else
-        						sprintf((char *)dtbuf,"%ldmi",(u32)(distance/1.609));		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%ldmi",(u32)(distance/1.609));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     					}
     			
     			    	else if(system_flag_table->myunit.H_W == 2)
     					{
         					if((distance/1.852)>=10 && (distance/1.852)<100)
-        						sprintf((char *)dtbuf,"%.2fkt",distance/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.2fkt",distance/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else if ((distance/1.852)<10)
-        						sprintf((char *)dtbuf,"%.3fkt",distance/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%.3fkt",distance/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         					else
-        						sprintf((char *)dtbuf,"%ldkt",(u32)(distance/1.852));		    		//µÃµ½ËÙ¶È×Ö·û´®
+        						sprintf((char *)dtbuf,"%ldkt",(u32)(distance/1.852));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     
     					}
     
     
-                        if(gpsx->fixmode >1)  // GPS¶¨Î»µ½ºó²ÅÏÔÊ¾ÄÚÈÝ
+                        if(gpsx->fixmode >1)  // GPSï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
     					    OLED_ShowString(48,16,dtbuf);
     				}
                 }
@@ -3668,15 +3668,15 @@ int test_sunriset(u16 year,u8 month,u8 day,float lon,float lat)
 
     
 	sunriset( year, month, day, lon, lat,
-		altit, upper_limb, &sunrise, &sunset );//ºËÐÄËã·¨£¬¼ÆËã³öÈÕ³öÈÕÂäÊ±¼ä±£´æÔÚsunriseºÍsunsetÀï
+		altit, upper_limb, &sunrise, &sunset );//ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä±£ï¿½ï¿½ï¿½ï¿½sunriseï¿½ï¿½sunsetï¿½ï¿½
 
 	hour = sunrise + zone;
 	minute = (sunrise - hour + zone)*60;
 
     if(gpsx->fixmode!=3)
-        sprintf((char *)dtbuf,"--:--");	//ÏÔÊ¾UTCÈÕÆÚ
+        sprintf((char *)dtbuf,"--:--");	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
     else
-        sprintf((char *)dtbuf,"%02d:%02d",hour,minute);	//ÏÔÊ¾UTCÈÕÆÚ
+        sprintf((char *)dtbuf,"%02d:%02d",hour,minute);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 	OLED_ShowString(22,16,dtbuf);
 
 
@@ -3684,9 +3684,9 @@ int test_sunriset(u16 year,u8 month,u8 day,float lon,float lat)
 	minute = (sunset - hour+zone)*60;
  
     if(gpsx->fixmode!=3)
-   		sprintf((char *)dtbuf,"--:--");	//ÏÔÊ¾UTCÈÕÆÚ
+   		sprintf((char *)dtbuf,"--:--");	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
     else
-       	sprintf((char *)dtbuf,"%02d:%02d",hour,minute);	//ÏÔÊ¾UTCÈÕÆÚ
+       	sprintf((char *)dtbuf,"%02d:%02d",hour,minute);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 	OLED_ShowString(83,16,dtbuf);
 
 	return 0;
@@ -3744,9 +3744,9 @@ void menu_chaoxi_display(void)
 		my_timer.week = RTC_Get_Week(my_timer.w_year ,my_timer.w_month,my_timer.w_date);
 	}
 
-	sprintf((char *)dtbuf,"%02d-%02d-%02d",RTC_DateStructure.RTC_Year ,my_timer.w_month,my_timer.w_date);	//ÏÔÊ¾UTCÈÕÆÚ
+	sprintf((char *)dtbuf,"%02d-%02d-%02d",RTC_DateStructure.RTC_Year ,my_timer.w_month,my_timer.w_date);	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
 	OLED_ShowString(0,48,dtbuf);
-	sprintf((char *)dtbuf,"  ");	//ÏÔÊ¾UTCÈÕÆÚ
+	sprintf((char *)dtbuf,"  ");	//ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
    	OLED_ShowString(64,48,dtbuf);
 	test_sunriset(my_timer.w_year ,my_timer.w_month,my_timer.w_date,tp_long,tp_lati);
 	moon_test(tp_long,tp_lati,my_timer.w_year ,my_timer.w_month,my_timer.w_date,time_zone);
@@ -4257,7 +4257,7 @@ void Recording_guji(void)
 			break;
 		case RECORED_START:
 			Message_head_number = 0;
-            // v1000_debug("fixmode :%d £¬latitude %d,longitude %d\r\n",gpsx->fixmode,gpsx->latitude,gpsx->longitude);
+            // v1000_debug("fixmode :%d ï¿½ï¿½latitude %d,longitude %d\r\n",gpsx->fixmode,gpsx->latitude,gpsx->longitude);
 			if((gpsx->fixmode >= 2)&&(gpsx->latitude >0)&&(gpsx->longitude>0))
 			{
 
@@ -4350,7 +4350,7 @@ void Recording_guji(void)
         			tatol_oled_time = tatol_time;
         			guji_mode = RECORED_START_DOING;
         			interst_pos_number = 0;
-        			//	sprintf((char *)dtbuf,"%d",interst_pos_number);		    		//µÃµ½ËÙ¶È×Ö·û´®
+        			//	sprintf((char *)dtbuf,"%d",interst_pos_number);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         			//	OLED_ShowString(17,32,dtbuf);
         			stm_write_eerpom(GUJI_INTERST_POS,interst_pos_number);
                }
@@ -4378,7 +4378,7 @@ void Recording_guji(void)
 			//if(interst_pos_number>100)
 			//	interst_pos_number = 0;
 			interst_pos_number++;
-    		//sprintf((char *)dtbuf,"%02d",interst_pos_number);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    		//sprintf((char *)dtbuf,"%02d",interst_pos_number);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     		//OLED_ShowString(18,32,dtbuf);
 			stm_write_eerpom(GUJI_INTERST_POS,interst_pos_number);
 			guji_mode = RECORED_START_DOING;
@@ -4508,11 +4508,11 @@ void menu_guiji_display(void)
         //distance	 = (floor)(guiji_distance);
 
         {
-            //	sprintf((char *)dtbuf,"%dkm",distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+            //	sprintf((char *)dtbuf,"%dkm",distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             if(system_flag_table->myunit.H_W == 0)
             {
                 if(guiji_distance>1.0)
-                    sprintf((char *)dtbuf,"%.2fkm",guiji_distance);		    		//µÃµ½ËÙ¶È×Ö·û´®
+                    sprintf((char *)dtbuf,"%.2fkm",guiji_distance);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
                 else
                     sprintf((char *)dtbuf,"%dm",((u32)(guiji_distance*1000)));
             }
@@ -4521,16 +4521,16 @@ void menu_guiji_display(void)
                 if((guiji_distance/1.609)>1.0)
                     sprintf((char *)dtbuf,"%.2fmi",guiji_distance/1.609);
                 else
-                    sprintf((char *)dtbuf,"%dft",((u32)(guiji_distance*1000/0.3048)));		    		//µÃµ½ËÙ¶È×Ö·û´®
-            //µÃµ½ËÙ¶È×Ö·û´®
+                    sprintf((char *)dtbuf,"%dft",((u32)(guiji_distance*1000/0.3048)));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+            //ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             }
         
             else if(system_flag_table->myunit.H_W == 2)
             {
                 if((guiji_distance/1.852)>1.0)
-                    sprintf((char *)dtbuf,"%.2fkt",guiji_distance/1.852);		    		//µÃµ½ËÙ¶È×Ö·û´®
+                    sprintf((char *)dtbuf,"%.2fkt",guiji_distance/1.852);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
                 else
-                    sprintf((char *)dtbuf,"%dft",((u32)(guiji_distance*1000/0.3048)));		    		//µÃµ½ËÙ¶È×Ö·û´®
+                    sprintf((char *)dtbuf,"%dft",((u32)(guiji_distance*1000/0.3048)));		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             }
             OLED_ShowString(0,48,dtbuf);
         }
@@ -4552,7 +4552,7 @@ void menu_guiji_display(void)
         }
 
 
-                   //µÃµ½ËÙ¶È×Ö·û´®
+                   //ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
         OLED_ShowString(80,48,dtbuf);
         if(guji_icon_index == 0)
         {
@@ -4560,7 +4560,7 @@ void menu_guiji_display(void)
                 tp =(u32)( (guiji_distance*100000)/(system_flag_table->personal_da.height*0.41));
             else
                 tp =(u32)( (guiji_distance*100000)/(system_flag_table->personal_da.height_ft*0.41));
-            sprintf((char *)dtbuf,"%d",tp);		    		//µÃµ½ËÙ¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%d",tp);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             OLED_ShowString(80-((what_is_numbe_10(tp)*8)),32,dtbuf);
             if(system_flag_table->lang == 1)
                 OLED_ShowString(80,32,"Steps");
@@ -4586,12 +4586,12 @@ void menu_guiji_display(void)
                 h = 99;
                 m = 99;
             }
-            sprintf((char *)dtbuf,"%02d:%02d",h,m);		    		//µÃµ½ËÙ¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%02d:%02d",h,m);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             OLED_ShowString(40,32,dtbuf);
         }
         else
         {
-            sprintf((char *)dtbuf,"%d",Message_head_number);		    		//µÃµ½ËÙ¶È×Ö·û´®
+            sprintf((char *)dtbuf,"%d",Message_head_number);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
             OLED_ShowString(80-((what_is_numbe_10(Message_head_number)*8)),32,dtbuf);
             if(system_flag_table->lang == 1)
                 OLED_ShowString(80,32,"Points");
@@ -4638,7 +4638,7 @@ void menu_guiji_display(void)
                    
                 }
 
-                sprintf((char *)dtbuf,"%d",tp);		    		//µÃµ½ËÙ¶È×Ö·û´®
+                sprintf((char *)dtbuf,"%d",tp);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
                 OLED_ShowString(80-((what_is_numbe_10(tp)*8)),16,dtbuf);
                 if(system_flag_table->lang == 1)
                     OLED_ShowString(80,16,"Kcal");
@@ -5126,7 +5126,7 @@ void menu_display_settingitem_recode(void)
 						    	for(i =0;i<3;i++)
 								{
     							//	system_flag_table->guji_record.by_distance_vaule= arry_bydistance[i];
-    								sprintf((char *)dtbuf,"%dm",arry_bydistance[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    								sprintf((char *)dtbuf,"%dm",arry_bydistance[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     								OLED_ShowString12(16,(29+(i*12)),dtbuf);
 								}
 							}
@@ -5135,7 +5135,7 @@ void menu_display_settingitem_recode(void)
 						    	for(i =3;i<5;i++)
 								{
     								//system_flag_table->guji_record.by_distance_vaule= arry_bydistance[i];
-    								sprintf((char *)dtbuf,"%dm",arry_bydistance[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    								sprintf((char *)dtbuf,"%dm",arry_bydistance[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     								OLED_ShowString12(16,(29+((i-3)*12)),dtbuf);
 								}
 							}
@@ -5147,7 +5147,7 @@ void menu_display_settingitem_recode(void)
 						    	for(i =0;i<3;i++)
 								{
     								//system_flag_table->guji_record.by_distance_vaule = arry_bydistance_2[i];
-    								sprintf((char *)dtbuf,"%dft",arry_bydistance_2[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    								sprintf((char *)dtbuf,"%dft",arry_bydistance_2[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     								OLED_ShowString12(16,(29+(i*12)),dtbuf);
 								}
 							}
@@ -5156,7 +5156,7 @@ void menu_display_settingitem_recode(void)
 							    for(i =3;i<5;i++)
 								{
     
-    								sprintf((char *)dtbuf,"%dft",arry_bydistance_2[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+    								sprintf((char *)dtbuf,"%dft",arry_bydistance_2[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     								OLED_ShowString12(16,(29+((i-3)*12)),dtbuf);
 								}
 							}
@@ -5192,7 +5192,7 @@ void menu_display_settingitem_recode(void)
 							for(i =0;i<3;i++)
 							{
 							//	system_flag_table->guji_record.by_time_vaule= arry_time[i];
-								sprintf((char *)dtbuf,"%ds",arry_time[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+								sprintf((char *)dtbuf,"%ds",arry_time[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 								OLED_ShowString12(16,(29+(i*12)),dtbuf);
 							}
 						}
@@ -5201,7 +5201,7 @@ void menu_display_settingitem_recode(void)
 							for(i =3;i<5;i++)
 							{
 							//	system_flag_table->guji_record.by_time_vaule = arry_time[i];
-								sprintf((char *)dtbuf,"%ds",arry_time[i]);		    		//µÃµ½ËÙ¶È×Ö·û´®
+								sprintf((char *)dtbuf,"%ds",arry_time[i]);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 								OLED_ShowString12(16,(29+((i-3)*12)),dtbuf);
 							}
 						}
@@ -5230,15 +5230,15 @@ void menu_display_settingitem_recode(void)
 						#if 1
 						if(system_flag_table->myunit.H_W == 0)
 						{
-							sprintf((char *)dtbuf,"%dkm",menu_setting_postion_2);		    		//µÃµ½ËÙ¶È×Ö·û´®
+							sprintf((char *)dtbuf,"%dkm",menu_setting_postion_2);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 						}
 						else if(system_flag_table->myunit.H_W == 1)
 						{
-							sprintf((char *)dtbuf,"%dmi",menu_setting_postion_2);		    		//µÃµ½ËÙ¶È×Ö·û´®
+							sprintf((char *)dtbuf,"%dmi",menu_setting_postion_2);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 						}
 						else
 						{
-							sprintf((char *)dtbuf,"%dkt",menu_setting_postion_2);		    		//µÃµ½ËÙ¶È×Ö·û´®
+							sprintf((char *)dtbuf,"%dkt",menu_setting_postion_2);		    		//ï¿½Ãµï¿½ï¿½Ù¶ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 						}
 						#endif
 			
@@ -5572,7 +5572,7 @@ void menu_enter_flash(u16 my_timer_flash)
 }
 
 
-/***ÏµÍ³ÉèÖÃ¸÷×ÓÏî*******************/
+/***ÏµÍ³ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½*******************/
 void menu_setting_mainpage_control(void)
 {
 
@@ -6500,7 +6500,7 @@ void system_setting_item(void)
                     year = (setting_tp&0x00ff0000)>>16;
                     month = (setting_tp&0x0000ff00)>>8;
                     data = (setting_tp&0x000000ff);
-                    sprintf((char *)dtbuf,"%02d-%02d-%02d",year,month,data);    //ÏÔÊ¾UTCÈÕÆÚ
+                    sprintf((char *)dtbuf,"%02d-%02d-%02d",year,month,data);    //ï¿½ï¿½Ê¾UTCï¿½ï¿½ï¿½ï¿½
                     OLED_ShowString12(72,52,dtbuf);
                 }
                 //OLED_ShowString12(80,52,COMPILED_DATE);
@@ -7060,7 +7060,7 @@ void setting_index_23page(void)
                       }
                       else
                           stm_write_eerpom(MENU_SETTING_FALME ,menu_setting_postion);
-                      /*ÐÔ±ð²»»á±£´æ*/
+                      /*ï¿½Ô±ð²»»á±£ï¿½ï¿½*/
                   //  setting_tp = menu_setting_postion;
               
                       enter_perss = 4;
@@ -7094,7 +7094,7 @@ void menu_setting_index_show(void)
 
 }
 
-/*ÏµÍ³ÉèÖÃ*/
+/*ÏµÍ³ï¿½ï¿½ï¿½ï¿½*/
 void menu_display_setting(void)
 {
   
@@ -7117,7 +7117,7 @@ void menu_display_setting(void)
 }
 
 
-/***ÉèÖÃ²Ëµ¥END******/
+/***ï¿½ï¿½ï¿½Ã²Ëµï¿½END******/
 
 
 

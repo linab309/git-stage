@@ -8,12 +8,14 @@
 #include "gps.h"
 #include "menutal.h"
 
-#define	BMP085_SlaveAddress   0xee	  //¶¨ÒåÆ÷¼şÔÚIIC×ÜÏßÖĞµÄ´ÓµØÖ·                               
+#define	BMP085_SlaveAddress   0xee	  /*å®šä¹‰å™¨ä»¶åœ¨IICæ€»çº¿ä¸­çš„ä»åœ°å€*/
 
 #define OSS 0	// Oversampling Setting (note: code is not set up to use other OSS values)
 							   
- 								//´òÓ¡»º´æÆ÷
-u8 ge,shi,bai,qian,wan,shiwan;           //ÏÔÊ¾±äÁ¿
+
+#ifdef NEED_TO_LEDSHOW 								
+u8 ge,shi,bai,qian,wan,shiwan;           //æ˜¾ç¤ºå˜é‡
+#endif
 
 short ac1;
 short ac2; 
@@ -31,10 +33,10 @@ u8 cy;
 
 int  temperature = 0xffff;
 long  pressure = 0xffffffff;;
-long Altitude = 0xffff;;											//º£°Î¸ß¶È
+long Altitude = 0xffff;;											//ï¿½ï¿½ï¿½Î¸ß¶ï¿½
 	
 
-void  Multiple_Read(u8,u8);                                          //Á¬ĞøµÄ¶ÁÈ¡ÄÚ²¿¼Ä´æÆ÷Êı¾İ
+void  Multiple_Read(u8,u8);                                          //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½È¡ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //------------------------------------
 void BMP085_Start(void);
 void BMP085_Stop(void);
@@ -49,24 +51,25 @@ void BMP085_WritePage(void);
 //*********************************************************
 void conversion(long temp_data)  
 {  
-    
+#ifdef NEED_TO_LEDSHOW    
     shiwan=temp_data/100000+0x30 ;
-    temp_data=temp_data%100000;   //È¡ÓàÔËËã 
+    temp_data=temp_data%100000;   
     wan=temp_data/10000+0x30 ;
-    temp_data=temp_data%10000;   //È¡ÓàÔËËã
+    temp_data=temp_data%10000;   
 	qian=temp_data/1000+0x30 ;
-    temp_data=temp_data%1000;    //È¡ÓàÔËËã
+    temp_data=temp_data%1000;    
     bai=temp_data/100+0x30   ;
-    temp_data=temp_data%100;     //È¡ÓàÔËËã
+    temp_data=temp_data%100;     
     shi=temp_data/10+0x30    ;
-    temp_data=temp_data%10;      //È¡ÓàÔËËã
-    ge=temp_data+0x30; 	
+    temp_data=temp_data%10;      
+    ge=temp_data+0x30;
+#endif 	
 }
 
 
 
 /**************************************
-ÆğÊ¼ĞÅºÅ
+ï¿½ï¿½Ê¼ï¿½Åºï¿½
 **************************************/
 void BMP085_Start()
 {
@@ -74,7 +77,7 @@ void BMP085_Start()
 }
 
 /**************************************
-Í£Ö¹ĞÅºÅ
+Í£Ö¹ï¿½Åºï¿½
 **************************************/
 void BMP085_Stop()
 {
@@ -82,8 +85,8 @@ void BMP085_Stop()
 }
 
 /**************************************
-·¢ËÍÓ¦´ğĞÅºÅ
-Èë¿Ú²ÎÊı:ack (0:ACK 1:NAK)
+ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Åºï¿½
+ï¿½ï¿½Ú²ï¿½ï¿½ï¿½:ack (0:ACK 1:NAK)
 **************************************/
 void BMP085_SendACK(u8 ack)
 {
@@ -91,7 +94,7 @@ void BMP085_SendACK(u8 ack)
 //	IIC_Ack();
  //else
  //	IIC_NAck();
-	 SDA_OUT();      //SDAÉèÖÃÎªÊäÈë  
+	 SDA_OUT();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 	 IIC_SDA = ack;
      IIC_SCL = 1;
 	 delay_us(5);
@@ -100,14 +103,14 @@ void BMP085_SendACK(u8 ack)
 }
 
 /**************************************
-½ÓÊÕÓ¦´ğĞÅºÅ
+ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Åºï¿½
 **************************************/
 u8 BMP085_RecvACK()
 {
 
 #if 0
 	u8 ucErrTime=0;
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 	IIC_SDA=1;delay_us(1);	   
 	IIC_SCL=1;delay_us(1);	 
 	while(READ_SDA)
@@ -119,10 +122,10 @@ u8 BMP085_RecvACK()
 			return 1;
 		}
 	}
-	IIC_SCL=0;//Ê±ÖÓÊä³ö0 	   
+	IIC_SCL=0;//Ê±ï¿½ï¿½ï¿½ï¿½ï¿½0 	   
 	return 0;  
 #endif
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
     IIC_SCL = 1;
     delay_us(5);
 	cy =IIC_SDA ;
@@ -132,21 +135,21 @@ u8 BMP085_RecvACK()
 }
 
 /**************************************
-ÏòIIC×ÜÏß·¢ËÍÒ»¸ö×Ö½ÚÊı¾İ
+ï¿½ï¿½IICï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
 **************************************/
 void BMP085_SendByte(u8 txd)
 {
 
 #if 0
     u8 i;
-	SDA_OUT();      //SDAÉèÖÃÎªÊäÈë  
-    for (i=0; i<8; i++)         //8Î»¼ÆÊıÆ÷
+	SDA_OUT();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
+    for (i=0; i<8; i++)         //8Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     { 
-        txd cy;               //ËÍÊı¾İ¿Ú
-        IIC_SCL = 1;                //À­¸ßÊ±ÖÓÏß
-        delay_us(5);             //ÑÓÊ±
-        IIC_SCL = 0;                //À­µÍÊ±ÖÓÏß
-        delay_us(5);            //ÑÓÊ±
+        txd cy;               //ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½
+        IIC_SCL = 1;                //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+        delay_us(5);             //ï¿½ï¿½Ê±
+        IIC_SCL = 0;                //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+        delay_us(5);            //ï¿½ï¿½Ê±
     }
     BMP085_RecvACK(); 
 	#endif
@@ -156,14 +159,14 @@ void BMP085_SendByte(u8 txd)
 }
 
 /**************************************
-´ÓIIC×ÜÏß½ÓÊÕÒ»¸ö×Ö½ÚÊı¾İ
+ï¿½ï¿½IICï¿½ï¿½ï¿½ß½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
 **************************************/
 u8 BMP085_RecvByte(void)
 {
  u8 dat;
 #if 0
 	unsigned char i,receive=0;
-	SDA_IN();//SDAÉèÖÃÎªÊäÈë
+	SDA_IN();//SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     for(i=0;i<8;i++ )
 	{
         IIC_SCL=0; 
@@ -174,9 +177,9 @@ u8 BMP085_RecvByte(void)
 		delay_us(1); 
     }					 
     if (!ack)
-        IIC_NAck();//·¢ËÍnACK
+        IIC_NAck();//ï¿½ï¿½ï¿½ï¿½nACK
     else
-        IIC_Ack(); //·¢ËÍACK   
+        IIC_Ack(); //ï¿½ï¿½ï¿½ï¿½ACK   
     return receive;
 #endif
 	dat =IIC_Read_Byte();
@@ -184,51 +187,51 @@ u8 BMP085_RecvByte(void)
 	
 }
 /*
-//µ¥×Ö½ÚĞ´ÈëBMP085ÄÚ²¿Êı¾İ*******************************
+//ï¿½ï¿½ï¿½Ö½ï¿½Ğ´ï¿½ï¿½BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½*******************************
 
 void Single_Write(uchar SlaveAddress,uchar REG_Address,uchar REG_data)
 {
-    BMP085_Start();                  //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ğ´ĞÅºÅ
-    BMP085_SendByte(REG_Address);    //ÄÚ²¿¼Ä´æÆ÷µØÖ·
-    BMP085_SendByte(REG_data);       //ÄÚ²¿¼Ä´æÆ÷Êı¾İ
-    BMP085_Stop();                   //·¢ËÍÍ£Ö¹ĞÅºÅ
+    BMP085_Start();                  //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ğ´ï¿½Åºï¿½
+    BMP085_SendByte(REG_Address);    //ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+    BMP085_SendByte(REG_data);       //ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BMP085_Stop();                   //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 }
 */
 /*
-//µ¥×Ö½Ú¶ÁÈ¡BMP085ÄÚ²¿Êı¾İ********************************
+//ï¿½ï¿½ï¿½Ö½Ú¶ï¿½È¡BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½********************************
 uchar Single_Read(uchar REG_Address)
 {  uchar REG_data;
-    BMP085_Start();                          //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);           //·¢ËÍÉè±¸µØÖ·+Ğ´ĞÅºÅ
-    BMP085_SendByte(REG_Address);            //·¢ËÍ´æ´¢µ¥ÔªµØÖ·	
-    BMP085_Start();                          //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress+1);         //·¢ËÍÉè±¸µØÖ·+¶ÁĞÅºÅ
-    REG_data=BMP085_RecvByte();              //¶Á³ö¼Ä´æÆ÷Êı¾İ
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);           //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ğ´ï¿½Åºï¿½
+    BMP085_SendByte(REG_Address);            //ï¿½ï¿½ï¿½Í´æ´¢ï¿½ï¿½Ôªï¿½ï¿½Ö·	
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress+1);         //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+ï¿½ï¿½ï¿½Åºï¿½
+    REG_data=BMP085_RecvByte();              //ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BMP085_SendACK(1);   
-	BMP085_Stop();                           //Í£Ö¹ĞÅºÅ
+	BMP085_Stop();                           //Í£Ö¹ï¿½Åºï¿½
     return REG_data; 
 }
 */
 //*********************************************************
-//¶Á³öBMP085ÄÚ²¿Êı¾İ,Á¬ĞøÁ½¸ö
+//ï¿½ï¿½ï¿½ï¿½BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //*********************************************************
 short Multiple_read(u8 ST_Address)
 {   
 	u8 msb, lsb;
 	short _data;
-    BMP085_Start();                          //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);    //·¢ËÍÉè±¸µØÖ·+Ğ´ĞÅºÅ
-    BMP085_SendByte(ST_Address);             //·¢ËÍ´æ´¢µ¥ÔªµØÖ·
-    BMP085_Start();                          //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress+1);         //·¢ËÍÉè±¸µØÖ·+¶ÁĞÅºÅ
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);    //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ğ´ï¿½Åºï¿½
+    BMP085_SendByte(ST_Address);             //ï¿½ï¿½ï¿½Í´æ´¢ï¿½ï¿½Ôªï¿½ï¿½Ö·
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress+1);         //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+ï¿½ï¿½ï¿½Åºï¿½
 
-    msb = BMP085_RecvByte();                 //BUF[0]´æ´¢
-    BMP085_SendACK(0);                       //»ØÓ¦ACK
+    msb = BMP085_RecvByte();                 //BUF[0]ï¿½æ´¢
+    BMP085_SendACK(0);                       //ï¿½ï¿½Ó¦ACK
     lsb = BMP085_RecvByte();     
-	BMP085_SendACK(1);                       //×îºóÒ»¸öÊı¾İĞèÒª»ØNOACK
+	BMP085_SendACK(1);                       //ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½NOACK
 
-    BMP085_Stop();                           //Í£Ö¹ĞÅºÅ
+    BMP085_Stop();                           //Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);
     _data = msb << 8;
 	_data |= lsb;	
@@ -238,11 +241,11 @@ short Multiple_read(u8 ST_Address)
 long bmp085ReadTemp(void)
 {
 long temp = 0;
-    BMP085_Start();                  //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ğ´ĞÅºÅ
+    BMP085_Start();                  //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ğ´ï¿½Åºï¿½
     BMP085_SendByte(0xF4);	          // write register address
     BMP085_SendByte(0x2E);       	// write register data for temp
-    BMP085_Stop();                   //·¢ËÍÍ£Ö¹ĞÅºÅ
+    BMP085_Stop();                   //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);  	// max time is 4.5ms
 	temp = Multiple_read(0xF6);
 //	v1000_debug("\r\n temp : %x \n\n",temp);
@@ -254,11 +257,11 @@ long bmp085ReadPressure(void)
 {
 	long pressure = 0;
 
-    BMP085_Start();                   //ÆğÊ¼ĞÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ğ´ĞÅºÅ
+    BMP085_Start();                   //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ğ´ï¿½Åºï¿½
     BMP085_SendByte(0xF4);	          // write register address
     BMP085_SendByte(0x34);       	  // write register data for pressure
-    BMP085_Stop();                    //·¢ËÍÍ£Ö¹ĞÅºÅ
+    BMP085_Stop();                    //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);    	                  // max time is 4.5ms
 	
 	pressure = Multiple_read(0xF6);
@@ -270,7 +273,7 @@ long bmp085ReadPressure(void)
 
 //**************************************************************
 
-//³õÊ¼»¯BMP085£¬¸ù¾İĞèÒªÇë²Î¿¼pdf½øĞĞĞŞ¸Ä**************
+//ï¿½ï¿½Ê¼ï¿½ï¿½BMP085ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Î¿ï¿½pdfï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½**************
 void Init_BMP085(void)
 {
 
@@ -309,9 +312,9 @@ void bmp085Convert(void)
 //	u8 dtbuf_jian[50];  
 	
 	ut = bmp085ReadTemp();
-	//ut = bmp085ReadTemp();	   // ¶ÁÈ¡ÎÂ¶È
+	//ut = bmp085ReadTemp();	   // ï¿½ï¿½È¡ï¿½Â¶ï¿½
 	up = bmp085ReadPressure();
-//	up = bmp085ReadPressure();  // ¶ÁÈ¡Ñ¹Ç¿
+//	up = bmp085ReadPressure();  // ï¿½ï¿½È¡Ñ¹Ç¿
 	
 	x1 = ((long)ut - ac6) * ac5 >> 15;
 	x2 = ((long) mc << 11) / (x1 + md);
@@ -340,7 +343,7 @@ void bmp085Convert(void)
 
 	 conversion(temperature);
 	v1000_debug("\r\ntemperature : %ld \n\n",temperature);
-	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	 OLED_ShowString(0,16,dtbuf_jian);	 	
      //*************
  #endif
@@ -372,17 +375,17 @@ void bmp085Convert(void)
 //	 conversion(pressure);
 
 //	  v1000_debug("\r\n 2: %ld!\n\n",pressure);
-//	 sprintf((char *)dtbuf_jian,"P: %c%c%c%c.%c%chpa",shiwan,wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+//	 sprintf((char *)dtbuf_jian,"P: %c%c%c%c.%c%chpa",shiwan,wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 //	 OLED_ShowString(0,48,dtbuf_jian);	 	
 	
 }
 
 /****************************************************************
-º¯ÊıÃû³Æ£ºBMP085_Get_Altitude			    
-º¯Êı¹¦ÄÜ£º»ñÈ¡º£°Î¸ß¶ÈÖµ
-Èë¿Ú²ÎÊı£ºÎŞ
-³ö¿Ú²ÎÊı£ºaltitude //intĞÍ  2×Ö½Ú£¬µ±Ç°º£°Î¸ß¶ÈÖµ
-±¸ ×¢£º	 ·µ»ØµÄ¸ß¶ÈÖµµ¥Î»ÎªÀåÃ×£¬µ÷ÓÃÊ±ÔÙ»»Ëã³É´øĞ¡ÊıµÄÒÔÃ×Îªµ¥Î»µÄ¸ß¶ÈÖµ
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½BMP085_Get_Altitude			    
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Î¸ß¶ï¿½Öµ
+ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½altitude //intï¿½ï¿½  2ï¿½Ö½Ú£ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Î¸ß¶ï¿½Öµ
+ï¿½ï¿½ ×¢ï¿½ï¿½	 ï¿½ï¿½ï¿½ØµÄ¸ß¶ï¿½Öµï¿½ï¿½Î»Îªï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ù»ï¿½ï¿½ï¿½É´ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Î»ï¿½Ä¸ß¶ï¿½Öµ
 *****************************************************************/
 int BMP085_Get_Altitude(void)
 {
@@ -396,15 +399,15 @@ int BMP085_Get_Altitude(void)
 //	v1000_debug("\r\n pp: %f m \n\n",pp);
 	pressure_tmep = (1/5.255);	
 //	v1000_debug("\r\n 1/5.255: %f m \n\n",pressure_tmep);
-	pressure_tmep = pow(pp,pressure_tmep);				//»ñÈ¡ÆøÑ¹Öµ
+	pressure_tmep = pow(pp,pressure_tmep);				//ï¿½ï¿½È¡ï¿½ï¿½Ñ¹Öµ
 //	v1000_debug("\r\n pressure_tmep: %f m \n\n",pressure_tmep);
-	altitude=44330*(1-pressure_tmep);  	//¸ù¾İĞ¾Æ¬ÊÖ²áÌá¹©µÄ¹«Ê½¼ÆËãº£°Î¸ß¶È
-	altitude*=10;	 		//×ª»»³ÉÀåÃ×µ¥Î»µÄ¸ß¶ÈÖµ£¬µ÷ÓÃÊ±ÔÙ»»Ëã³É´øĞ¡ÊıµÄ¸ß¶ÈÖµ£¬Ìá¸ß¾«¶È
+	altitude=44330*(1-pressure_tmep);  	//ï¿½ï¿½ï¿½ï¿½Ğ¾Æ¬ï¿½Ö²ï¿½ï¿½á¹©ï¿½Ä¹ï¿½Ê½ï¿½ï¿½ï¿½ãº£ï¿½Î¸ß¶ï¿½
+	altitude*=10;	 		//×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Î»ï¿½Ä¸ß¶ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ù»ï¿½ï¿½ï¿½É´ï¿½Ğ¡ï¿½ï¿½ï¿½Ä¸ß¶ï¿½Öµï¿½ï¿½ï¿½ï¿½ß¾ï¿½ï¿½ï¿½
 //	if(altitude<0)
 //		altitude	
 //	conversion(altitude);
 	
-//	sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+//	sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 //		
 //	OLED_ShowString(0,32,dtbuf_jian);	 
 	//v1000_debug("\r\n H: %f m \n\n",altitude);
@@ -413,11 +416,11 @@ int BMP085_Get_Altitude(void)
 
 
 /****************************************************************
-¡¡¡¡¡¡º¯ÊıÃû³Æ£ºConvAltitude()			    
-¡¡¡¡¡¡º¯Êı¹¦ÄÜ£º×ª»»º£°Î¸ß¶È
-¡¡¡¡¡¡Èë¿Ú²ÎÊı£ºÎŞ
-¡¡¡¡¡¡³ö¿Ú²ÎÊı£ºÎŞ   
-¡¡¡¡¡¡±¸ ×¢£º½«µÃµ½Êı¾İ×ª»¯³ÉlcdµÄÊı¾İ£¬±ãÓÚÏÔÊ¾	 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ConvAltitude()			    
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Î¸ß¶ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½lcdï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾	 
 *****************************************************************/
 void ConvAltitude(void)
 {
@@ -454,32 +457,32 @@ void ConvAltitude(void)
 #endif	
 	//v1000_debug("system_flag_table->ajust_arr: %d m \n\n",system_flag_table->ajust_arr);
 	//Altitude=(Altitude+BMP085_Get_Altitude())/2;
-/**************È¡10´Î²âÁ¿ÖµµÄÆ½¾ùÖµ×÷Îª²âÁ¿½oá¹û£¬´ËËã·¨´æÔÚ¼ÇÒäĞ§¹û*************/
+/**************È¡10ï¿½Î²ï¿½ï¿½ï¿½Öµï¿½ï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½*************/
 
 #if 0
 		conversion(Altitude);
 		v1000_debug("\r\n H: %ld m \n\n",Altitude);
 		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
+			sprintf((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
 		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
+			sprintf((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
 		OLED_ShowString(0,32,dtbuf_jian);
 
-	AltitudeTempFlag++;									//±êÖ¾×Ô¼Ó
+	AltitudeTempFlag++;									//ï¿½ï¿½Ö¾ï¿½Ô¼ï¿½
 	if(AltitudeTempFlag>=10)
 		{
 		AltitudeTempFlag=0;		
-		Tempnum/=10;//¼ÆËã³öÆ½¾ùÖµ
+		Tempnum/=10;//ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		conversion(Tempnum);	
 		v1000_debug("\r\n H: %ld m \n\n",Tempnum);
 		Tempnum = 0;
 		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
+			sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
 		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
+			sprintf((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
 		}
 	
-		Tempnum+=Altitude;			//¸ù¾İ±êÖ¾±£´æÊı¾İµ½Êı×é
+		Tempnum+=Altitude;			//ï¿½ï¿½ï¿½İ±ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İµï¿½ï¿½ï¿½ï¿½ï¿½
 
 #endif
 
@@ -487,7 +490,7 @@ void ConvAltitude(void)
 
 }
 //*********************************************************
-//******Ö÷³ÌĞò********
+//******ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½********
 //*********************************************************
 void BMP085_get_process(void)
 { 
