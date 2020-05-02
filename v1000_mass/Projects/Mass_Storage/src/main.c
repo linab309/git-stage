@@ -69,8 +69,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* Extern variables ----------------------------------------------------------*/
 
-const u8 *COMPILED_TIME=__TIME__;//»ñµÃ±àÒëÊ±¼ä
-const u8 *COMPILED_DATE=__DATE__;//»ñµÃ±àÒëÈÕÆÚ
+const u8 *COMPILED_TIME=__TIME__;//ï¿½ï¿½Ã±ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+const u8 *COMPILED_DATE=__DATE__;//ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 //extern const u8 BMP_logo[];
 //
@@ -200,26 +200,26 @@ FRESULT scan_directory_oldfile (
 void change_clk_need_int(u8 mode)
 {
     if(mode == 0)
-      delay_init(16);	     //ÑÓÊ±³õÊ¼»¯
+      delay_init(16);	     //ï¿½ï¿½Ê±ï¿½ï¿½Ê¼ï¿½ï¿½
     else
-      delay_init(32);	     //ÑÓÊ±³õÊ¼»¯
+      delay_init(32);	     //ï¿½ï¿½Ê±ï¿½ï¿½Ê¼ï¿½ï¿½
 
 #if EN_USART1
     uart_init(115200);
 #endif
 
     if(mode == 0)
-    	USART2_Init(16,38400);	//³õÊ¼»¯´®¿Ú2
+    	USART2_Init(16,38400);	//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2
     else
-    	USART2_Init(32,38400);	//³õÊ¼»¯´®¿Ú2
+    	USART2_Init(32,38400);	//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2
     // 	v1000_debug("\n\r Flash_Index :%d",Flash_Index);
-    //	Timerx_Init(99,3199);//10Khz  ¼ÆÊý4999 --- 500ms
+    //	Timerx_Init(99,3199);//10Khz  ï¿½ï¿½ï¿½ï¿½4999 --- 500ms
     if(mode == 0)
-        Timerx_Init(99,1599);//10Khz  ¼ÆÊý4999 --- 500ms
+        Timerx_Init(99,1599);//10Khz  ï¿½ï¿½ï¿½ï¿½4999 --- 500ms
     else
-        Timerx_Init(99,3199);//10Khz  ¼ÆÊý4999 --- 500ms
+        Timerx_Init(99,3199);//10Khz  ï¿½ï¿½ï¿½ï¿½4999 --- 500ms
 
-    SPI_Flash_Init();   //SPI FLASH ³õÊ¼»¯
+    SPI_Flash_Init();   //SPI FLASH ï¿½ï¿½Ê¼ï¿½ï¿½
 //    PWM_Init();
     ADC_Config();
 }
@@ -372,7 +372,7 @@ int main (void)
     }
     
     __enable_irq();
-    delay_init(32);      //ÑÓÊ±³õÊ¼»//
+    delay_init(32);      //ï¿½ï¿½Ê±ï¿½ï¿½Ê¼ï¿½//
 
 
 #if EN_USART1
@@ -387,8 +387,8 @@ int main (void)
     //OLED_ShowString12(16,28,"!!!!");
 
    // v1000_show_logo();
-    KEY_Init();				//³õÊ¼»¯ÓëLEDÁ¬½ÓµÄÓ²¼þ½Ó¿Ú
-    SPI_Flash_Init();   //SPI FLASH ³õÊ¼»¯
+    KEY_Init();				//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½LEDï¿½ï¿½ï¿½Óµï¿½Ó²ï¿½ï¿½ï¿½Ó¿ï¿½
+    SPI_Flash_Init();   //SPI FLASH ï¿½ï¿½Ê¼ï¿½ï¿½
     SPI_Flash_WAKEUP();
     SPIx_SetSpeed(SPI_SPEED_2);
     delay_ms(50);
@@ -404,7 +404,7 @@ int main (void)
     Timerx_Init(99,3199);//10Khz  ??4999 --- 500ms
     check_eeprom_init();
     Send_to_goto_lowpower();
-    Init_BMP085();
+    bmp_moudle_preinit();
 //    PWM_Init();
     ADC_Config();
     Button_key_perss(0);

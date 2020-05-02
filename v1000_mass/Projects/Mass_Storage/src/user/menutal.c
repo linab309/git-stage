@@ -7551,7 +7551,7 @@ void menu_keyprocess(u8 key)
                     Movie_Show_Img(0, 22,BMP_logo);
 					//OLED_ShowString(60,30,"1.00");
                     OLED_Refresh_Gram();
-                    Init_BMP085();
+                    bmp_moudle_preinit();
                     di_and_flash_empet(2);
                     //delay_ms(1200);
                     delay_ms(1200);
