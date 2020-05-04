@@ -8,12 +8,15 @@
 #include "gps.h"
 #include "menutal.h"
 
-#define	BMP085_SlaveAddress   0xee	  //¶¨ÒåÆ÷¼þÔÚIIC×ÜÏßÖÐµÄ´ÓµØÖ·                               
+#include "bmp280.h"
+
+#define	BMP085_SlaveAddress   0xee	  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IICï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ´Óµï¿½Ö·                               
 
 #define OSS 0	// Oversampling Setting (note: code is not set up to use other OSS values)
 							   
- 								//´òÓ¡»º´æÆ÷
-u8 ge,shi,bai,qian,wan,shiwan;           //ÏÔÊ¾±äÁ¿
+#ifdef LED_SHOW_NEED
+u8 ge,shi,bai,qian,wan,shiwan;           //ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+#endif
 
 short ac1;
 short ac2; 
@@ -31,10 +34,17 @@ u8 cy;
 
 int  temperature = 0xffff;
 long  pressure = 0xffffffff;;
-long Altitude = 0xffff;;											//º£°Î¸ß¶È
-	
+long Altitude = 0xffff;;											//ï¿½ï¿½ï¿½Î¸ß¶ï¿½
 
-void  Multiple_Read(u8,u8);                                          //Á¬ÐøµÄ¶ÁÈ¡ÄÚ²¿¼Ä´æÆ÷Êý¾Ý
+
+
+/*****/
+#define  BMP180  0
+#define  BMP280  1
+
+u8  bmp_moudle = BMP280;
+
+void  Multiple_Read(u8,u8);                                          //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½È¡ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //------------------------------------
 void BMP085_Start(void);
 void BMP085_Stop(void);
@@ -49,24 +59,25 @@ void BMP085_WritePage(void);
 //*********************************************************
 void conversion(long temp_data)  
 {  
-    
+#ifdef LED_SHOW_NEED 
     shiwan=temp_data/100000+0x30 ;
-    temp_data=temp_data%100000;   //È¡ÓàÔËËã 
+    temp_data=temp_data%100000;   //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     wan=temp_data/10000+0x30 ;
-    temp_data=temp_data%10000;   //È¡ÓàÔËËã
+    temp_data=temp_data%10000;   //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	qian=temp_data/1000+0x30 ;
-    temp_data=temp_data%1000;    //È¡ÓàÔËËã
+    temp_data=temp_data%1000;    //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     bai=temp_data/100+0x30   ;
-    temp_data=temp_data%100;     //È¡ÓàÔËËã
+    temp_data=temp_data%100;     //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     shi=temp_data/10+0x30    ;
-    temp_data=temp_data%10;      //È¡ÓàÔËËã
+    temp_data=temp_data%10;      //È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     ge=temp_data+0x30; 	
+#endif
 }
 
 
 
 /**************************************
-ÆðÊ¼ÐÅºÅ
+ï¿½ï¿½Ê¼ï¿½Åºï¿½
 **************************************/
 void BMP085_Start()
 {
@@ -74,7 +85,7 @@ void BMP085_Start()
 }
 
 /**************************************
-Í£Ö¹ÐÅºÅ
+Í£Ö¹ï¿½Åºï¿½
 **************************************/
 void BMP085_Stop()
 {
@@ -82,8 +93,8 @@ void BMP085_Stop()
 }
 
 /**************************************
-·¢ËÍÓ¦´ðÐÅºÅ
-Èë¿Ú²ÎÊý:ack (0:ACK 1:NAK)
+ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Åºï¿½
+ï¿½ï¿½Ú²ï¿½ï¿½ï¿½:ack (0:ACK 1:NAK)
 **************************************/
 void BMP085_SendACK(u8 ack)
 {
@@ -91,7 +102,7 @@ void BMP085_SendACK(u8 ack)
 //	IIC_Ack();
  //else
  //	IIC_NAck();
-	 SDA_OUT();      //SDAÉèÖÃÎªÊäÈë  
+	 SDA_OUT();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 	 IIC_SDA = ack;
      IIC_SCL = 1;
 	 delay_us(5);
@@ -100,14 +111,14 @@ void BMP085_SendACK(u8 ack)
 }
 
 /**************************************
-½ÓÊÕÓ¦´ðÐÅºÅ
+ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Åºï¿½
 **************************************/
 u8 BMP085_RecvACK()
 {
 
 #if 0
 	u8 ucErrTime=0;
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 	IIC_SDA=1;delay_us(1);	   
 	IIC_SCL=1;delay_us(1);	 
 	while(READ_SDA)
@@ -119,10 +130,10 @@ u8 BMP085_RecvACK()
 			return 1;
 		}
 	}
-	IIC_SCL=0;//Ê±ÖÓÊä³ö0 	   
+	IIC_SCL=0;//Ê±ï¿½ï¿½ï¿½ï¿½ï¿½0 	   
 	return 0;  
 #endif
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
     IIC_SCL = 1;
     delay_us(5);
 	cy =IIC_SDA ;
@@ -132,21 +143,21 @@ u8 BMP085_RecvACK()
 }
 
 /**************************************
-ÏòIIC×ÜÏß·¢ËÍÒ»¸ö×Ö½ÚÊý¾Ý
+ï¿½ï¿½IICï¿½ï¿½ï¿½ß·ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
 **************************************/
 void BMP085_SendByte(u8 txd)
 {
 
 #if 0
     u8 i;
-	SDA_OUT();      //SDAÉèÖÃÎªÊäÈë  
-    for (i=0; i<8; i++)         //8Î»¼ÆÊýÆ÷
+	SDA_OUT();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
+    for (i=0; i<8; i++)         //8Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     { 
-        txd cy;               //ËÍÊý¾Ý¿Ú
-        IIC_SCL = 1;                //À­¸ßÊ±ÖÓÏß
-        delay_us(5);             //ÑÓÊ±
-        IIC_SCL = 0;                //À­µÍÊ±ÖÓÏß
-        delay_us(5);            //ÑÓÊ±
+        txd cy;               //ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
+        IIC_SCL = 1;                //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+        delay_us(5);             //ï¿½ï¿½Ê±
+        IIC_SCL = 0;                //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+        delay_us(5);            //ï¿½ï¿½Ê±
     }
     BMP085_RecvACK(); 
 	#endif
@@ -156,14 +167,14 @@ void BMP085_SendByte(u8 txd)
 }
 
 /**************************************
-´ÓIIC×ÜÏß½ÓÊÕÒ»¸ö×Ö½ÚÊý¾Ý
+ï¿½ï¿½IICï¿½ï¿½ï¿½ß½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
 **************************************/
 u8 BMP085_RecvByte(void)
 {
  u8 dat;
 #if 0
 	unsigned char i,receive=0;
-	SDA_IN();//SDAÉèÖÃÎªÊäÈë
+	SDA_IN();//SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
     for(i=0;i<8;i++ )
 	{
         IIC_SCL=0; 
@@ -174,9 +185,9 @@ u8 BMP085_RecvByte(void)
 		delay_us(1); 
     }					 
     if (!ack)
-        IIC_NAck();//·¢ËÍnACK
+        IIC_NAck();//ï¿½ï¿½ï¿½ï¿½nACK
     else
-        IIC_Ack(); //·¢ËÍACK   
+        IIC_Ack(); //ï¿½ï¿½ï¿½ï¿½ACK   
     return receive;
 #endif
 	dat =IIC_Read_Byte();
@@ -184,51 +195,51 @@ u8 BMP085_RecvByte(void)
 	
 }
 /*
-//µ¥×Ö½ÚÐ´ÈëBMP085ÄÚ²¿Êý¾Ý*******************************
+//ï¿½ï¿½ï¿½Ö½ï¿½Ð´ï¿½ï¿½BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½*******************************
 
 void Single_Write(uchar SlaveAddress,uchar REG_Address,uchar REG_data)
 {
-    BMP085_Start();                  //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ð´ÐÅºÅ
-    BMP085_SendByte(REG_Address);    //ÄÚ²¿¼Ä´æÆ÷µØÖ·
-    BMP085_SendByte(REG_data);       //ÄÚ²¿¼Ä´æÆ÷Êý¾Ý
-    BMP085_Stop();                   //·¢ËÍÍ£Ö¹ÐÅºÅ
+    BMP085_Start();                  //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ð´ï¿½Åºï¿½
+    BMP085_SendByte(REG_Address);    //ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½Ö·
+    BMP085_SendByte(REG_data);       //ï¿½Ú²ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    BMP085_Stop();                   //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 }
 */
 /*
-//µ¥×Ö½Ú¶ÁÈ¡BMP085ÄÚ²¿Êý¾Ý********************************
+//ï¿½ï¿½ï¿½Ö½Ú¶ï¿½È¡BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½********************************
 uchar Single_Read(uchar REG_Address)
 {  uchar REG_data;
-    BMP085_Start();                          //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);           //·¢ËÍÉè±¸µØÖ·+Ð´ÐÅºÅ
-    BMP085_SendByte(REG_Address);            //·¢ËÍ´æ´¢µ¥ÔªµØÖ·	
-    BMP085_Start();                          //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress+1);         //·¢ËÍÉè±¸µØÖ·+¶ÁÐÅºÅ
-    REG_data=BMP085_RecvByte();              //¶Á³ö¼Ä´æÆ÷Êý¾Ý
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);           //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ð´ï¿½Åºï¿½
+    BMP085_SendByte(REG_Address);            //ï¿½ï¿½ï¿½Í´æ´¢ï¿½ï¿½Ôªï¿½ï¿½Ö·	
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress+1);         //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+ï¿½ï¿½ï¿½Åºï¿½
+    REG_data=BMP085_RecvByte();              //ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	BMP085_SendACK(1);   
-	BMP085_Stop();                           //Í£Ö¹ÐÅºÅ
+	BMP085_Stop();                           //Í£Ö¹ï¿½Åºï¿½
     return REG_data; 
 }
 */
 //*********************************************************
-//¶Á³öBMP085ÄÚ²¿Êý¾Ý,Á¬ÐøÁ½¸ö
+//ï¿½ï¿½ï¿½ï¿½BMP085ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //*********************************************************
 short Multiple_read(u8 ST_Address)
 {   
 	u8 msb, lsb;
 	short _data;
-    BMP085_Start();                          //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);    //·¢ËÍÉè±¸µØÖ·+Ð´ÐÅºÅ
-    BMP085_SendByte(ST_Address);             //·¢ËÍ´æ´¢µ¥ÔªµØÖ·
-    BMP085_Start();                          //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress+1);         //·¢ËÍÉè±¸µØÖ·+¶ÁÐÅºÅ
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);    //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ð´ï¿½Åºï¿½
+    BMP085_SendByte(ST_Address);             //ï¿½ï¿½ï¿½Í´æ´¢ï¿½ï¿½Ôªï¿½ï¿½Ö·
+    BMP085_Start();                          //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress+1);         //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+ï¿½ï¿½ï¿½Åºï¿½
 
-    msb = BMP085_RecvByte();                 //BUF[0]´æ´¢
-    BMP085_SendACK(0);                       //»ØÓ¦ACK
+    msb = BMP085_RecvByte();                 //BUF[0]ï¿½æ´¢
+    BMP085_SendACK(0);                       //ï¿½ï¿½Ó¦ACK
     lsb = BMP085_RecvByte();     
-	BMP085_SendACK(1);                       //×îºóÒ»¸öÊý¾ÝÐèÒª»ØNOACK
+	BMP085_SendACK(1);                       //ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½NOACK
 
-    BMP085_Stop();                           //Í£Ö¹ÐÅºÅ
+    BMP085_Stop();                           //Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);
     _data = msb << 8;
 	_data |= lsb;	
@@ -238,11 +249,11 @@ short Multiple_read(u8 ST_Address)
 long bmp085ReadTemp(void)
 {
 long temp = 0;
-    BMP085_Start();                  //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ð´ÐÅºÅ
+    BMP085_Start();                  //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ð´ï¿½Åºï¿½
     BMP085_SendByte(0xF4);	          // write register address
     BMP085_SendByte(0x2E);       	// write register data for temp
-    BMP085_Stop();                   //·¢ËÍÍ£Ö¹ÐÅºÅ
+    BMP085_Stop();                   //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);  	// max time is 4.5ms
 	temp = Multiple_read(0xF6);
 //	v1000_debug("\r\n temp : %x \n\n",temp);
@@ -254,11 +265,11 @@ long bmp085ReadPressure(void)
 {
 	long pressure = 0;
 
-    BMP085_Start();                   //ÆðÊ¼ÐÅºÅ
-    BMP085_SendByte(BMP085_SlaveAddress);   //·¢ËÍÉè±¸µØÖ·+Ð´ÐÅºÅ
+    BMP085_Start();                   //ï¿½ï¿½Ê¼ï¿½Åºï¿½
+    BMP085_SendByte(BMP085_SlaveAddress);   //ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ö·+Ð´ï¿½Åºï¿½
     BMP085_SendByte(0xF4);	          // write register address
     BMP085_SendByte(0x34);       	  // write register data for pressure
-    BMP085_Stop();                    //·¢ËÍÍ£Ö¹ÐÅºÅ
+    BMP085_Stop();                    //ï¿½ï¿½ï¿½ï¿½Í£Ö¹ï¿½Åºï¿½
 	delay_ms(5);    	                  // max time is 4.5ms
 	
 	pressure = Multiple_read(0xF6);
@@ -267,32 +278,6 @@ long bmp085ReadPressure(void)
 	return pressure;	
 	//return (long) bmp085ReadShort(0xF6);
 }
-
-//**************************************************************
-
-//³õÊ¼»¯BMP085£¬¸ù¾ÝÐèÒªÇë²Î¿¼pdf½øÐÐÐÞ¸Ä**************
-void Init_BMP085(void)
-{
-
-//	delay_ms(50);
-//	v1000_debug("\nInit_BMP085!\n");
-	ac1 = Multiple_read(0xAA);
-	ac2 = Multiple_read(0xAC);
-	ac3 = Multiple_read(0xAE);
-	ac4 = Multiple_read(0xB0);
-	ac5 = Multiple_read(0xB2);
-	ac6 = Multiple_read(0xB4);
-	b1 =  Multiple_read(0xB6);
-	b2 =  Multiple_read(0xB8);
-	mb =  Multiple_read(0xBA);
-	mc =  Multiple_read(0xBC);
-	md =  Multiple_read(0xBE);
-
-//	v1000_debug("\r\nBMP085   ac1 :%d,ac2 :%d,ac3 :%d,ac4 :%d,ac5 :%d,ac6 :%d,b1 :%d,b2 :%d, mb :%d, mc :%d, md :%d!\n",
-//		ac1,ac2,ac3,ac4,ac5,ac6,b1,b2,mb,mc,md);
-}
-
-
 
 
 //***********************************************************************
@@ -309,9 +294,9 @@ void bmp085Convert(void)
 //	u8 dtbuf_jian[50];  
 	
 	ut = bmp085ReadTemp();
-	//ut = bmp085ReadTemp();	   // ¶ÁÈ¡ÎÂ¶È
+	//ut = bmp085ReadTemp();	   // ï¿½ï¿½È¡ï¿½Â¶ï¿½
 	up = bmp085ReadPressure();
-//	up = bmp085ReadPressure();  // ¶ÁÈ¡Ñ¹Ç¿
+//	up = bmp085ReadPressure();  // ï¿½ï¿½È¡Ñ¹Ç¿
 	
 	x1 = ((long)ut - ac6) * ac5 >> 15;
 	x2 = ((long) mc << 11) / (x1 + md);
@@ -330,17 +315,17 @@ void bmp085Convert(void)
     	temperature = temperature-(temperature*0.1);
     }
 
-//	 else
-	 	{
-	//	temperature = (temperature +((b5 + 8) >> 4))/2;
+//	else
+	{
+	    // temperature = (temperature +((b5 + 8) >> 4))/2;
 		// temperature = (temperature+temperature_new)/2;
-	 	}
+	}
 #if 0
 	 //*************
 
 	 conversion(temperature);
 	v1000_debug("\r\ntemperature : %ld \n\n",temperature);
-	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 	 OLED_ShowString(0,16,dtbuf_jian);	 	
      //*************
  #endif
@@ -356,55 +341,55 @@ void bmp085Convert(void)
 	b4 = (ac4 * (unsigned long) (x3 + 32768)) >> 15;
 	b7 = ((unsigned long) up - b3) * (50000 >> OSS);
 	if( b7 < 0x80000000)
-	     p = (b7 * 2) / b4 ;
-           else  
-		    p = (b7 / b4) * 2;
+	    p = (b7 * 2) / b4 ;
+    else  
+		p = (b7 / b4) * 2;
 	x1 = (p >> 8) * (p >> 8);
 	x1 = (x1 * 3038) >> 16;
 	x2 = (-7357 * p) >> 16;
-	 if(pressure == 0xffffffff)	 
+	if(pressure == 0xffffffff)	 
 	 	pressure = p + ((x1 + x2 + 3791) >> 4);
-	 else
-	 	{
+	else
+	{
 	 	pressure_new = (pressure +(p + ((x1 + x2 + 3791) >> 4)))/2;	 	
-		 pressure = (pressure+pressure_new)/2;
-	 	}
+		pressure = (pressure+pressure_new)/2;
+	}
 //	 conversion(pressure);
 
 //	  v1000_debug("\r\n 2: %ld!\n\n",pressure);
-//	 sprintf((char *)dtbuf_jian,"P: %c%c%c%c.%c%chpa",shiwan,wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+//	 sprintf((char *)dtbuf_jian,"P: %c%c%c%c.%c%chpa",shiwan,wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 //	 OLED_ShowString(0,48,dtbuf_jian);	 	
 	
 }
 
 /****************************************************************
-º¯ÊýÃû³Æ£ºBMP085_Get_Altitude			    
-º¯Êý¹¦ÄÜ£º»ñÈ¡º£°Î¸ß¶ÈÖµ
-Èë¿Ú²ÎÊý£ºÎÞ
-³ö¿Ú²ÎÊý£ºaltitude //intÐÍ  2×Ö½Ú£¬µ±Ç°º£°Î¸ß¶ÈÖµ
-±¸ ×¢£º	 ·µ»ØµÄ¸ß¶ÈÖµµ¥Î»ÎªÀåÃ×£¬µ÷ÓÃÊ±ÔÙ»»Ëã³É´øÐ¡ÊýµÄÒÔÃ×Îªµ¥Î»µÄ¸ß¶ÈÖµ
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½BMP085_Get_Altitude			    
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Î¸ß¶ï¿½Öµ
+ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½altitude //intï¿½ï¿½  2ï¿½Ö½Ú£ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Î¸ß¶ï¿½Öµ
+ï¿½ï¿½ ×¢ï¿½ï¿½	 ï¿½ï¿½ï¿½ØµÄ¸ß¶ï¿½Öµï¿½ï¿½Î»Îªï¿½ï¿½ï¿½×£ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ù»ï¿½ï¿½ï¿½É´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Î»ï¿½Ä¸ß¶ï¿½Öµ
 *****************************************************************/
 int BMP085_Get_Altitude(void)
 {
 	float pressure_tmep,pp;
 	float altitude;
-//	u8 dtbuf_jian[50]; 
-	//v1000_debug("\r\n pressure: %ld!\n\n",pressure);
+    // u8 dtbuf_jian[50]; 
+	// v1000_debug("\r\n pressure: %ld!\n\n",pressure);
 	pressure_tmep = (float)pressure;
-	pp =(pressure_tmep/101325);
+	pp = (pressure_tmep/101325);
 //	v1000_debug("\r\n pressure_tmep: %f m \n\n",pressure_tmep);
 //	v1000_debug("\r\n pp: %f m \n\n",pp);
 	pressure_tmep = (1/5.255);	
 //	v1000_debug("\r\n 1/5.255: %f m \n\n",pressure_tmep);
-	pressure_tmep = pow(pp,pressure_tmep);				//»ñÈ¡ÆøÑ¹Öµ
+	pressure_tmep = pow(pp,pressure_tmep);				//ï¿½ï¿½È¡ï¿½ï¿½Ñ¹Öµ
 //	v1000_debug("\r\n pressure_tmep: %f m \n\n",pressure_tmep);
-	altitude=44330*(1-pressure_tmep);  	//¸ù¾ÝÐ¾Æ¬ÊÖ²áÌá¹©µÄ¹«Ê½¼ÆËãº£°Î¸ß¶È
-	altitude*=10;	 		//×ª»»³ÉÀåÃ×µ¥Î»µÄ¸ß¶ÈÖµ£¬µ÷ÓÃÊ±ÔÙ»»Ëã³É´øÐ¡ÊýµÄ¸ß¶ÈÖµ£¬Ìá¸ß¾«¶È
+	altitude = 44330*(1-pressure_tmep);  	//ï¿½ï¿½ï¿½ï¿½Ð¾Æ¬ï¿½Ö²ï¿½ï¿½á¹©ï¿½Ä¹ï¿½Ê½ï¿½ï¿½ï¿½ãº£ï¿½Î¸ß¶ï¿½
+	altitude *= 10;	 		//×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×µï¿½Î»ï¿½Ä¸ß¶ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ù»ï¿½ï¿½ï¿½É´ï¿½Ð¡ï¿½ï¿½ï¿½Ä¸ß¶ï¿½Öµï¿½ï¿½ï¿½ï¿½ß¾ï¿½ï¿½ï¿½
 //	if(altitude<0)
 //		altitude	
 //	conversion(altitude);
 	
-//	sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®
+//	sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
 //		
 //	OLED_ShowString(0,32,dtbuf_jian);	 
 	//v1000_debug("\r\n H: %f m \n\n",altitude);
@@ -413,11 +398,11 @@ int BMP085_Get_Altitude(void)
 
 
 /****************************************************************
-¡¡¡¡¡¡º¯ÊýÃû³Æ£ºConvAltitude()			    
-¡¡¡¡¡¡º¯Êý¹¦ÄÜ£º×ª»»º£°Î¸ß¶È
-¡¡¡¡¡¡Èë¿Ú²ÎÊý£ºÎÞ
-¡¡¡¡¡¡³ö¿Ú²ÎÊý£ºÎÞ   
-¡¡¡¡¡¡±¸ ×¢£º½«µÃµ½Êý¾Ý×ª»¯³ÉlcdµÄÊý¾Ý£¬±ãÓÚÏÔÊ¾	 
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ£ï¿½ConvAltitude()			    
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½Î¸ß¶ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ×¢ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½lcdï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾	 
 *****************************************************************/
 void ConvAltitude(void)
 {
@@ -447,51 +432,189 @@ void ConvAltitude(void)
 	  		  	
 #if 0
 	if(gpsx->fixmode == 3)  
-		{
+	{
 		if((gpsx->speed/1000>400)||((gpsx->altitude/10)>8000))	  
 			Altitude = (gpsx->altitude/10)*100;
-		}
+	}
 #endif	
 	//v1000_debug("system_flag_table->ajust_arr: %d m \n\n",system_flag_table->ajust_arr);
 	//Altitude=(Altitude+BMP085_Get_Altitude())/2;
-/**************È¡10´Î²âÁ¿ÖµµÄÆ½¾ùÖµ×÷Îª²âÁ¿½oá¹û£¬´ËËã·¨´æÔÚ¼ÇÒäÐ§¹û*************/
+/**************È¡10ï¿½Î²ï¿½ï¿½ï¿½Öµï¿½ï¿½Æ½ï¿½ï¿½Öµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ð§ï¿½ï¿½*************/
 
 #if 0
-		conversion(Altitude);
-		v1000_debug("\r\n H: %ld m \n\n",Altitude);
-		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
-		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
-		OLED_ShowString(0,32,dtbuf_jian);
+	conversion(Altitude);
+	v1000_debug("\r\n H: %ld m \n\n",Altitude);
+	if(flag ==0)
+		sprintf((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
+	else	
+		sprintf((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
+	OLED_ShowString(0,32,dtbuf_jian);
 
-	AltitudeTempFlag++;									//±êÖ¾×Ô¼Ó
+	AltitudeTempFlag++;									//ï¿½ï¿½Ö¾ï¿½Ô¼ï¿½
 	if(AltitudeTempFlag>=10)
-		{
+	{
 		AltitudeTempFlag=0;		
-		Tempnum/=10;//¼ÆËã³öÆ½¾ùÖµ
+		Tempnum/=10;//ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Öµ
 		conversion(Tempnum);	
 		v1000_debug("\r\n H: %ld m \n\n",Tempnum);
 		Tempnum = 0;
 		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
+			sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
 		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//µÃµ½¾­¶È×Ö·û´®		
-		}
+			sprintf((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½		
+	}
 	
-		Tempnum+=Altitude;			//¸ù¾Ý±êÖ¾±£´æÊý¾Ýµ½Êý×é
+	Tempnum+=Altitude;			//ï¿½ï¿½ï¿½Ý±ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½
 
 #endif
 
 
 
 }
+
+struct bmp280_dev v1000_bmp280;
+
+void bmp280_pressure(struct bmp280_dev bmp)
+{
+	struct bmp280_uncomp_data ucomp_data;
+    uint32_t pres32, pres64;
+    double pres;
+	/* Reading the raw data from sensor */
+	rslt = bmp280_get_uncomp_data(&ucomp_data, &v1000_bmp280);
+
+	/* Getting the compensated pressure using 32 bit precision */
+	rslt = bmp280_get_comp_pres_32bit(&pres32, ucomp_data.uncomp_press, &v1000_bmp280);
+
+	/* Getting the compensated pressure using 64 bit precision */
+	rslt = bmp280_get_comp_pres_64bit(&pres64, ucomp_data.uncomp_press, &v1000_bmp280);
+
+	/* Getting the compensated pressure as floating point value */
+	rslt = bmp280_get_comp_pres_double(&pres, ucomp_data.uncomp_press, &v1000_bmp280);
+
+	printf("UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
+			ucomp_data.uncomp_press,
+			pres32,
+			pres64,
+			pres64 / 256,
+			pres);
+}
+
+void bmp280_temperature(struct bmp280_dev bmp)
+{
+	int8_t rslt;
+    struct bmp280_uncomp_data ucomp_data;
+    int32_t temp32;
+    double temp;
+
+	/* Reading the raw data from sensor */
+	rslt = bmp280_get_uncomp_data(&ucomp_data, &v1000_bmp280);
+
+	/* Getting the 32 bit compensated temperature */
+	rslt = bmp280_get_comp_temp_32bit(&temp32, ucomp_data.uncomp_temp, &v1000_bmp280);
+
+	/* Getting the compensated temperature as floating point value */
+	rslt = bmp280_get_comp_temp_double(&temp, ucomp_data.uncomp_temp, &v1000_bmp280);
+
+	printf("UT: %ld, T32: %ld, T: %f \r\n", ucomp_data.uncomp_temp, temp32, v1000_bmp280);
+}
 //*********************************************************
-//******Ö÷³ÌÐò********
+//******ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½********
 //*********************************************************
 void BMP085_get_process(void)
 { 
-	bmp085Convert();
-	ConvAltitude();
+	if(bmp_moudle == BMP180)
+	{
+		bmp085Convert();
+		ConvAltitude();
+	}
+	else if(bmp_moudle == BMP280)
+	{
+		bmp280_pressure(v1000_bmp280);
+		bmp280_temperature(v1000_bmp280);
+	}
+	
 } 
+
+void Init_BMP085(void)
+{
+	ac1 = Multiple_read(0xAA);
+	ac2 = Multiple_read(0xAC);
+	ac3 = Multiple_read(0xAE);
+	ac4 = Multiple_read(0xB0);
+	ac5 = Multiple_read(0xB2);
+	ac6 = Multiple_read(0xB4);
+	b1 =  Multiple_read(0xB6);
+	b2 =  Multiple_read(0xB8);
+	mb =  Multiple_read(0xBA);
+	mc =  Multiple_read(0xBC);
+	md =  Multiple_read(0xBE);
+//	v1000_debug("\r\nBMP085   ac1 :%d,ac2 :%d,ac3 :%d,ac4 :%d,ac5 :%d,ac6 :%d,b1 :%d,b2 :%d, mb :%d, mc :%d, md :%d!\n",
+//		ac1,ac2,ac3,ac4,ac5,ac6,b1,b2,mb,mc,md);
+}
+
+void bmp_module_init(void)
+{
+    int8_t rslt;
+    struct bmp280_config conf;
+
+
+    /* Map the delay function pointer with the function responsible for implementing the delay */
+    v1000_bmp280.delay_ms = delay_ms;
+
+    /* Assign device I2C address based on the status of SDO pin (GND for PRIMARY(0x76) & VDD for SECONDARY(0x77)) */
+    v1000_bmp280.dev_id = BMP280_I2C_ADDR_PRIM;
+
+    /* Select the interface mode as I2C */
+    v1000_bmp280.intf = BMP280_I2C_INTF;
+
+    /* Map the I2C read & write function pointer with the functions responsible for I2C bus transfer */
+    v1000_bmp280.read = i2c_reg_read;
+    v1000_bmp280.write = i2c_reg_write;
+
+    /* To enable SPI interface: comment the above 4 lines and uncomment the below 4 lines */
+
+    /*
+     * v1000_bmp280.dev_id = 0;
+     * v1000_bmp280.read = spi_reg_read;
+     * v1000_bmp280.write = spi_reg_write;
+     * v1000_bmp280.intf = BMP280_SPI_INTF;
+     */
+    rslt = bmp280_init(&v1000_bmp280);
+    print_rslt(" bmp280_init status", rslt);
+    if(rslt != BMP280_OK)
+	{
+		Init_BMP085();
+		bmp_moudle = BMP180;
+	}
+	else
+	{
+		/* code */
+		bmp_moudle = BMP280;		
+		/* Always read the current settings before writing, especially when
+		* all the configuration is not modified
+		*/
+		rslt = bmp280_get_config(&conf, &v1000_bmp280);
+		print_rslt(" bmp280_get_config status", rslt);
+
+		/* configuring the temperature oversampling, filter coefficient and output data rate */
+		/* Overwrite the desired settings */
+		conf.filter = BMP280_FILTER_COEFF_2;
+
+		/* Pressure oversampling set at 4x */
+		conf.os_pres = BMP280_OS_4X;
+
+		/* Setting the output data rate as 1HZ(1000ms) */
+		conf.odr = BMP280_ODR_1000_MS;
+		rslt = bmp280_set_config(&conf, &v1000_bmp280);
+		print_rslt(" bmp280_set_config status", rslt);
+
+		/* Always set the power mode after setting the configuration */
+		rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &v1000_bmp280);
+		print_rslt(" bmp280_set_power_mode status", rslt);
+	}
+
+}
+
+
+
 
