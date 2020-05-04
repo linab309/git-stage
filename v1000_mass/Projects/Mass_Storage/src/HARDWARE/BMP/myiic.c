@@ -1,105 +1,105 @@
 #include "myiic.h"
 #include "delay.h"
 //////////////////////////////////////////////////////////////////////////////////	 
-//±¾³ÌÐòÖ»¹©Ñ§Ï°Ê¹ÓÃ£¬Î´¾­×÷ÕßÐí¿É£¬²»µÃÓÃÓÚÆäËüÈÎºÎÓÃÍ¾
-//Mini STM32¿ª·¢°å
-//IIC Çý¶¯º¯Êý	   
-//ÕýµãÔ­×Ó@ALIENTEK
-//¼¼ÊõÂÛÌ³:www.openedv.com
-//ÐÞ¸ÄÈÕÆÚ:2010/6/10 
-//°æ±¾£ºV1.0
-//°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
-//Copyright(C) ÕýµãÔ­×Ó 2009-2019
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ñ§Ï°Ê¹ï¿½Ã£ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½Í¾
+//Mini STM32ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//IIC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½	   
+//ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½@ALIENTEK
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì³:www.openedv.com
+//ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½:2010/6/10 
+//ï¿½æ±¾ï¿½ï¿½V1.0
+//ï¿½ï¿½È¨ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
+//Copyright(C) ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ 2009-2019
 //All rights reserved
 ////////////////////////////////////////////////////////////////////////////////// 	  
 
-//³õÊ¼»¯IIC
+//ï¿½ï¿½Ê¼ï¿½ï¿½IIC
 void IIC_Init(void)
 {					     
- GPIO_InitTypeDef  GPIO_InitStructure;
+	GPIO_InitTypeDef  GPIO_InitStructure;
 
-//RCC->APB2ENR|=1<<4;//ÏÈÊ¹ÄÜÍâÉèIO PORTCÊ±ÖÓ 							 
-//	GPIOC->CRH&=0XFFF00FFF;//PC11/12 ÍÆÍìÊä³ö
-//	GPIOC->CRH|=0X00033000;	   
-//	GPIOC->ODR|=3<<11;     //PC11,12 Êä³ö¸ß
-RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB,ENABLE);
+	//RCC->APB2ENR|=1<<4;//ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IO PORTCÊ±ï¿½ï¿½ 							 
+	//	GPIOC->CRH&=0XFFF00FFF;//PC11/12 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//	GPIOC->CRH|=0X00033000;	   
+	//	GPIOC->ODR|=3<<11;     //PC11,12 ï¿½ï¿½ï¿½ï¿½ï¿½
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB,ENABLE);
 
- GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ¶Ë¿ÚÅäÖÃ
- GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ÍÆÍìÊä³ö
- GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ÍÆÍìÊä³ö
- GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
- GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
- GPIO_Init(GPIOB, &GPIO_InitStructure);
- GPIO_SetBits(GPIOB,GPIO_Pin_8);						 //PA.8 Êä³ö¸ß
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_SetBits(GPIOB,GPIO_Pin_8);						 //PA.8 ï¿½ï¿½ï¿½ï¿½ï¿½
 
-GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;	    		 //LED1-->PD.2 ¶Ë¿ÚÅäÖÃ
-GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ÍÆÍìÊä³ö
-GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ÍÆÍìÊä³ö
-GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
-GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-GPIO_Init(GPIOB, &GPIO_InitStructure);	
-GPIO_SetBits(GPIOB,GPIO_Pin_9); 						 //PD.2 Êä³ö¸ß 
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;	    		 //LED1-->PD.2 ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);	
+	GPIO_SetBits(GPIOB,GPIO_Pin_9); 						 //PD.2 ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
-//	GPIOC->CRL&=0XFF0FFF0F;//PC4/5 ÍÆÍìÊä³ö
+//	GPIOC->CRL&=0XFF0FFF0F;//PC4/5 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //	GPIOC->CRL|=0X00300030;	   
-//	GPIOC->ODR|=1<<5;     //PC4,4 Êä³ö¸ß
-//	GPIOC->ODR|=1<<1;     //PC4,4 Êä³ö¸ß
+//	GPIOC->ODR|=1<<5;     //PC4,4 ï¿½ï¿½ï¿½ï¿½ï¿½
+//	GPIOC->ODR|=1<<1;     //PC4,4 ï¿½ï¿½ï¿½ï¿½ï¿½
 }
-//²úÉúIICÆðÊ¼ÐÅºÅ
+//ï¿½ï¿½ï¿½ï¿½IICï¿½ï¿½Ê¼ï¿½Åºï¿½
 
 
-//IO·½ÏòÉèÖÃ
+//IOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void SDA_IN(void) 
 {
-//GPIOC->MODE&=0XFFFFFF0F;GPIOC->CRL|=2<<4;
-GPIO_InitTypeDef  GPIO_InitStructure;
- GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ¶Ë¿ÚÅäÖÃ
- GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN; 		 //ÍÆÍìÊä³ö
-// GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ÍÆÍìÊä³ö
- GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
- GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
- GPIO_Init(GPIOB, &GPIO_InitStructure);
+	//GPIOC->MODE&=0XFFFFFF0F;GPIOC->CRL|=2<<4;
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
 }
 void SDA_OUT(void) 
 {
-GPIO_InitTypeDef  GPIO_InitStructure;
- GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ¶Ë¿ÚÅäÖÃ
- GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ÍÆÍìÊä³ö
- GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ÍÆÍìÊä³ö
- GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
- GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
- GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;				 //SDA-->PC.4 ï¿½Ë¿ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP; 		 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
 }
 
 void IIC_Start(void)
 {
-	SDA_OUT();     //sdaÏßÊä³ö
+	SDA_OUT();     //sdaï¿½ï¿½ï¿½ï¿½ï¿½
 	IIC_SDA=1;	  	  
 	IIC_SCL=1;
 	delay_us(5);
  	IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
 	delay_us(5);
-	IIC_SCL=0;//Ç¯×¡I2C×ÜÏß£¬×¼±¸·¢ËÍ»ò½ÓÊÕÊý¾Ý 
+	IIC_SCL=0;//Ç¯×¡I2Cï¿½ï¿½ï¿½ß£ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 }	  
-//²úÉúIICÍ£Ö¹ÐÅºÅ
+//ï¿½ï¿½ï¿½ï¿½IICÍ£Ö¹ï¿½Åºï¿½
 void IIC_Stop(void)
 {
-	SDA_OUT();//sdaÏßÊä³ö
+	SDA_OUT();//sdaï¿½ï¿½ï¿½ï¿½ï¿½
 	//IIC_SCL=0;
 	IIC_SDA=0;//STOP:when CLK is high DATA change form low to high
  	//delay_us(5);
 	IIC_SCL=1; 
 	delay_us(5);
-	IIC_SDA=1;//·¢ËÍI2C×ÜÏß½áÊøÐÅºÅ
+	IIC_SDA=1;//ï¿½ï¿½ï¿½ï¿½I2Cï¿½ï¿½ï¿½ß½ï¿½ï¿½ï¿½ï¿½Åºï¿½
 	delay_us(5);							   	
 }
-//µÈ´ýÓ¦´ðÐÅºÅµ½À´
-//·µ»ØÖµ£º1£¬½ÓÊÕÓ¦´ðÊ§°Ü
-//        0£¬½ÓÊÕÓ¦´ð³É¹¦
+//ï¿½È´ï¿½Ó¦ï¿½ï¿½ï¿½ÅºÅµï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ê§ï¿½ï¿½
+//        0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½É¹ï¿½
 u8 IIC_Wait_Ack(void)
 {
 	u8 ucErrTime=0;
-	SDA_IN();      //SDAÉèÖÃÎªÊäÈë  
+	SDA_IN();      //SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½  
 	IIC_SDA=1;delay_us(5);	   
 	IIC_SCL=1;delay_us(5);	 
 	while(READ_SDA)
@@ -111,10 +111,10 @@ u8 IIC_Wait_Ack(void)
 			return 1;
 		}
 	}
-	IIC_SCL=0;//Ê±ÖÓÊä³ö0 	   
+	IIC_SCL=0;//Ê±ï¿½ï¿½ï¿½ï¿½ï¿½0 	   
 	return 0;  
 } 
-//²úÉúACKÓ¦´ð
+//ï¿½ï¿½ï¿½ï¿½ACKÓ¦ï¿½ï¿½
 void IIC_Ack(void)
 {
 	IIC_SCL=0;
@@ -125,7 +125,7 @@ void IIC_Ack(void)
 	delay_us(5);
 	IIC_SCL=0;
 }
-//²»²úÉúACKÓ¦´ð		    
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ACKÓ¦ï¿½ï¿½		    
 void IIC_NAck(void)
 {
 	IIC_SCL=0;
@@ -136,47 +136,47 @@ void IIC_NAck(void)
 	delay_us(2);
 	IIC_SCL=0;
 }					 				     
-//IIC·¢ËÍÒ»¸ö×Ö½Ú
-//·µ»Ø´Ó»úÓÐÎÞÓ¦´ð
-//1£¬ÓÐÓ¦´ð
-//0£¬ÎÞÓ¦´ð			  
+//IICï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö½ï¿½
+//ï¿½ï¿½ï¿½Ø´Ó»ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+//1ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+//0ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½			  
 void IIC_Send_Byte(u8 txd)
 {                        
     u8 t;   
 	SDA_OUT(); 	    
-    IIC_SCL=0;//À­µÍÊ±ÖÓ¿ªÊ¼Êý¾Ý´«Êä
+    IIC_SCL=0;//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ó¿ï¿½Ê¼ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½
     for(t=0;t<8;t++)
     {              
         IIC_SDA=(txd&0x80)>>7;
         txd<<=1; 	  
-		delay_us(2);   //¶ÔTEA5767ÕâÈý¸öÑÓÊ±¶¼ÊÇ±ØÐëµÄ
+		delay_us(2);   //ï¿½ï¿½TEA5767ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½
 		IIC_SCL=1;
 		delay_us(5); 
 		IIC_SCL=0;	
 		delay_us(5);
     }	 
 } 	    
-//¶Á1¸ö×Ö½Ú£¬ack=1Ê±£¬·¢ËÍACK£¬ack=0£¬·¢ËÍnACK   
+//ï¿½ï¿½1ï¿½ï¿½ï¿½Ö½Ú£ï¿½ack=1Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ACKï¿½ï¿½ack=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½nACK   
 u8 IIC_Read_Byte(void)
 {
 	unsigned char i,receive=0;
-	SDA_OUT();//SDAÉèÖÃÎªÊäÈë
+	SDA_OUT();//SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
 	IIC_SDA = 1;
     for(i=0;i<8;i++ )
 	{
         receive<<=1;
 		IIC_SCL=1;
         delay_us(5);
-	    SDA_IN();//SDAÉèÖÃÎªÊäÈë
+	    SDA_IN();//SDAï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
         if(READ_SDA)receive++;   
         IIC_SCL=0; 
         delay_us(5);
     }
 	#if 0
     if (!ack)
-        IIC_NAck();//·¢ËÍnACK
+        IIC_NAck();//ï¿½ï¿½ï¿½ï¿½nACK
     else
-        IIC_Ack(); //·¢ËÍACK   
+        IIC_Ack(); //ï¿½ï¿½ï¿½ï¿½ACK   
 	#endif
     return receive;
 }
