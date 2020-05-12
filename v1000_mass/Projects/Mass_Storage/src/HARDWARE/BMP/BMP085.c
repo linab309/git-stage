@@ -531,7 +531,7 @@ void ConvAltitude(void)
  */
 int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
-
+	printf("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
     /* Implement the I2C write routine according to the target machine. */\
 	arry_Write(i2c_addr,reg_addr,reg_data,length);
     return 0;
@@ -552,7 +552,9 @@ int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint
  */
 int8_t i2c_reg_read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
+	
 	arry_Read(i2c_addr,reg_addr,reg_data,length);
+	printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d data =%x \r\n", i2c_addr,reg_addr,length,reg_data[0]);
 	/* Implement the I2C read routine according to the target machine. */
 	return 0;
 }
@@ -615,7 +617,7 @@ void bmp280_read_pressure_tempreature(struct bmp280_dev bmp)
 	temperature =(int)(temp32&0xffff);
 	pressure = (long)pre32;
 	
-	printf("UT: %ld, T32: %ld, P32: %ld, \r\n", ucomp_data.uncomp_temp, temp32, pressure);
+	printf("UT: %d, UP: %d,,T32: %d, P32: %d, \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pre32);
           
 }
 
@@ -649,12 +651,13 @@ int bmp_moudle_preinit(void)
     if (rslt != BMP280_OK)
 	{
 		print_rslt(" bmp280_init status", rslt);
+		bmp_mode_type = BMP180_TYPE;
 		Init_BMP085();
 	}        
     else
     {       
 		rslt = bmp280_get_config(&conf, &bmp);
-		print_rslt(" bmp280_get_config status", rslt);
+		printf(" bmp280 init OK");
 
 		/* configuring the temperature oversampling, filter coefficient and output data rate */
 		/* Overwrite the desired settings */
@@ -662,7 +665,7 @@ int bmp_moudle_preinit(void)
 
 		/* Pressure oversampling set at 4x */
 		conf.os_pres = BMP280_OS_4X;
-
+		conf.os_temp = BMP280_OS_4X;
 		/* Setting the output data rate as 1HZ(1000ms) */
 		conf.odr = BMP280_ODR_1000_MS;
 		rslt = bmp280_set_config(&conf, &bmp);
@@ -670,7 +673,9 @@ int bmp_moudle_preinit(void)
 
 		/* Always set the power mode after setting the configuration */
 		rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
-		print_rslt(" bmp280_set_power_mode status", rslt);		
+		print_rslt(" bmp280_set_power_mode status", rslt);	
+
+		bmp_mode_type = BMP280_TYPE;	
     }
     
 

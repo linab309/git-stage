@@ -399,6 +399,12 @@ int8_t bmp280_get_uncomp_data(struct bmp280_uncomp_data *uncomp_data, const stru
         rslt = bmp280_get_regs(BMP280_PRES_MSB_ADDR, temp, 6, dev);
         if (rslt == BMP280_OK)
         {
+            printf("temp[0] :%x \r\n",temp[0]);
+            printf("temp[1] :%x \r\n",temp[1]);
+            printf("temp[2] :%x \r\n",temp[2]);
+            printf("temp[3] :%x \r\n",temp[3]);
+            printf("temp[4] :%x \r\n",temp[4]);
+            printf("temp[5] :%x \r\n",temp[5]);
             uncomp_data->uncomp_press =
                 (int32_t) ((((uint32_t) (temp[0])) << 12) | (((uint32_t) (temp[1])) << 4) | ((uint32_t) temp[2] >> 4));
             uncomp_data->uncomp_temp =

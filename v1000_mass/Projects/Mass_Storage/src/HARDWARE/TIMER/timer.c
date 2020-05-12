@@ -27,7 +27,7 @@ u8 timer_flag =0;
 #ifdef baoyu
     u8 flash_baoyu_flag = 0;
 #endif
-//u8 USART1_TX_BUF[USART2_MAX_RECV_LEN]; 					//´®¿Ú1,·¢ËÍ»º´æÇø
+//u8 USART1_TX_BUF[USART2_MAX_RECV_LEN]; 					//ï¿½ï¿½ï¿½ï¿½1,ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½
 
 #ifdef baoyu
 extern u8 baoyun_flag;
@@ -79,7 +79,7 @@ void timer_lower2_type(void)
                 flash_led_low_power_timer = 0;
                 //LED0=1;
                 Movie_Show_Img(58,24,Bmp_stanby_1);
-                OLED_Refresh_Gram();//¸üÐÂÏÔÊ¾
+                OLED_Refresh_Gram();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
                 flash_led_flag =1;
             }
         }
@@ -90,7 +90,7 @@ void timer_lower2_type(void)
                 flash_led_low_power_timer = 0;
                 OLED_Clear();
                 OLED_Fill(58, 24, 70, 36, 0);
-                OLED_Refresh_Gram();//¸üÐÂÏÔÊ¾
+                OLED_Refresh_Gram();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
                 flash_led_flag = 2;
             }
         }
@@ -101,7 +101,7 @@ void timer_lower2_type(void)
                 flash_led_low_power_timer = 0;
                 OLED_Clear();
                 Movie_Show_Img(58,24,Bmp_stanby_1);
-                OLED_Refresh_Gram();//¸üÐÂÏÔÊ¾
+                OLED_Refresh_Gram();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
                 flash_led_flag = 3;
             }
         }
@@ -112,7 +112,7 @@ void timer_lower2_type(void)
                 flash_led_low_power_timer = 0;
                 OLED_Clear();
                 OLED_Fill(58, 24, 70, 36, 0);
-                OLED_Refresh_Gram();//¸üÐÂÏÔÊ¾
+                OLED_Refresh_Gram();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
                 flash_led_flag = 0;
             }
          }
@@ -205,12 +205,12 @@ void timer_when_user_press_key_type(void)
     }
 
 }
-//¶¨Ê±Æ÷3ÖÐ¶Ï·þÎñ³ÌÐò
+//ï¿½ï¿½Ê±ï¿½ï¿½3ï¿½Ð¶Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void TIM3_IRQHandler(void)
 {
     static u8 static_rtc_cnt = 0;
 
-	if(TIM3->SR&0X0001)//Òç³öÖÐ¶Ï
+	if(TIM3->SR&0X0001)//ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
 	{
 
         timer_when_user_press_key_type();
@@ -264,24 +264,24 @@ void TIM3_IRQHandler(void)
 
 	}
 
-	TIM3->SR&=~(1<<0);//Çå³ýÖÐ¶Ï±êÖ¾Î»
+	TIM3->SR&=~(1<<0);//ï¿½ï¿½ï¿½ï¿½Ð¶Ï±ï¿½Ö¾Î»
 }
-//Í¨ÓÃ¶¨Ê±Æ÷ÖÐ¶Ï³õÊ¼»¯
-//ÕâÀïÊ±ÖÓÑ¡ÔñÎªAPB1µÄ2±¶£¬¶øAPB1Îª36M
-//arr£º×Ô¶¯ÖØ×°Öµ¡£
-//psc£ºÊ±ÖÓÔ¤·ÖÆµÊý
-//ÕâÀïÊ¹ÓÃµÄÊÇ¶¨Ê±Æ÷3!
+//Í¨ï¿½Ã¶ï¿½Ê±ï¿½ï¿½ï¿½Ð¶Ï³ï¿½Ê¼ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ñ¡ï¿½ï¿½ÎªAPB1ï¿½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½APB1Îª36M
+//arrï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½×°Öµï¿½ï¿½
+//pscï¿½ï¿½Ê±ï¿½ï¿½Ô¤ï¿½ï¿½Æµï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½ï¿½Ç¶ï¿½Ê±ï¿½ï¿½3!
 
 void Timerx_Init(u16 arr,u16 psc)
 {
-	RCC->APB1ENR|=1<<1;//TIM3Ê±ÖÓÊ¹ÄÜ
- 	TIM3->ARR=arr;  //Éè¶¨¼ÆÊýÆ÷×Ô¶¯ÖØ×°Öµ//¸ÕºÃ1ms
-	TIM3->PSC=psc;  //Ô¤·ÖÆµÆ÷7200,µÃµ½10KhzµÄ¼ÆÊýÊ±ÖÓ
-	//ÕâÁ½¸ö¶«¶«ÒªÍ¬Ê±ÉèÖÃ²Å¿ÉÒÔÊ¹ÓÃÖÐ¶Ï
-	TIM3->DIER|=1<<0;   //ÔÊÐí¸üÐÂÖÐ¶Ï
-//	TIM3->DIER|=1<<6;   //ÔÊÐí´¥·¢ÖÐ¶Ï
-	TIM3->CR1|=0x01;    //Ê¹ÄÜ¶¨Ê±Æ÷3
-  	MY_NVIC_Init(1,3,TIM3_IRQn,2);//ÇÀÕ¼1£¬×ÓÓÅÏÈ¼¶3£¬×é2
+	RCC->APB1ENR|=1<<1;//TIM3Ê±ï¿½ï¿½Ê¹ï¿½ï¿½
+ 	TIM3->ARR=arr;  //ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½×°Öµ//ï¿½Õºï¿½1ms
+	TIM3->PSC=psc;  //Ô¤ï¿½ï¿½Æµï¿½ï¿½7200,ï¿½Ãµï¿½10Khzï¿½Ä¼ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒªÍ¬Ê±ï¿½ï¿½ï¿½Ã²Å¿ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ð¶ï¿½
+	TIM3->DIER|=1<<0;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+//	TIM3->DIER|=1<<6;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+	TIM3->CR1|=0x01;    //Ê¹ï¿½Ü¶ï¿½Ê±ï¿½ï¿½3
+  	MY_NVIC_Init(1,3,TIM3_IRQn,2);//ï¿½ï¿½Õ¼1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¼ï¿½3ï¿½ï¿½ï¿½ï¿½2
 }
 
 
@@ -431,7 +431,7 @@ void Timer_task(void)
             timer_cnt ++;
         }
     
-        if(timer_bmp085_cnt == 20)
+        if(timer_bmp085_cnt == 100)
         {
             timer_bmp085_cnt = 0;
             //v1000_debug("\r\n timer_bmp085_cnt\n");
@@ -486,7 +486,7 @@ void arriving_sound_proess(void)
         {
             LED0 = 1;
             di_and_flash_empet(2);
-            LED0 = 0;/*²»ÒªÈÃÕð¶¯ÏìÓ¦Ì«³¤Ê±¼ä*/
+            LED0 = 0;/*ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦Ì«ï¿½ï¿½Ê±ï¿½ï¿½*/
             delay_ms(150);
             di_and_flash_empet(2);
             if(Arriving_sound_flag == 6)
@@ -571,10 +571,10 @@ void gps_data_receiver(void)
 {
     u16 rxlen = 0;
 
-    if(USART2_RX_STA&0X8000)        //½ÓÊÕµ½Ò»´ÎÊý¾ÝÁË
+    if(USART2_RX_STA&0X8000)        //ï¿½ï¿½ï¿½Õµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
-        //ÏÔÊ¾ÐÅÏ¢
-        rxlen = USART2_RX_STA&0X7FFF;   //µÃµ½Êý¾Ý³¤¶È
+        //ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
+        rxlen = USART2_RX_STA&0X7FFF;   //ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
         
 #ifdef NEED_COM_TO_PC   
 
@@ -591,11 +591,11 @@ void gps_data_receiver(void)
         }
 #endif           
     
-        USART2_RX_BUF[rxlen] = 0;           //×Ô¶¯Ìí¼Ó½áÊø·û
+        USART2_RX_BUF[rxlen] = 0;           //ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½ï¿½ï¿½
         //v1000_debug("%s",USART2_RX_BUF);        
         //memset(gpsx,0,sizeof(nmea_msg));
-        GPS_Analysis(gpsx,(u8*)USART2_RX_BUF);//·ÖÎö×Ö·û´®
-        USART2_RX_STA=0;           //Æô¶¯ÏÂÒ»´Î½ÓÊÕ
+        GPS_Analysis(gpsx,(u8*)USART2_RX_BUF);//ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
+        USART2_RX_STA=0;           //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Î½ï¿½ï¿½ï¿½
         
         if(average_speed == 0xffff)
             average_speed = gpsx->speed;
@@ -605,8 +605,8 @@ void gps_data_receiver(void)
 #if 0
         {
             v1000_debug("\nDMA DATA:");
-            USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);           //Ê¹ÄÜ´®¿Ú1µÄDMA·¢ËÍ
-            MYDMA_Enable(DMA1_Channel4);//¿ªÊ¼Ò»´ÎDMA´«Êä£¡
+            USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);           //Ê¹ï¿½Ü´ï¿½ï¿½ï¿½1ï¿½ï¿½DMAï¿½ï¿½ï¿½ï¿½
+            MYDMA_Enable(DMA1_Channel4);//ï¿½ï¿½Ê¼Ò»ï¿½ï¿½DMAï¿½ï¿½ï¿½ä£¡
         }
 #endif
         guji_Distance();
