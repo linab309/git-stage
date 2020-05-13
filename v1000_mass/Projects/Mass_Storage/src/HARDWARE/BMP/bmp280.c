@@ -220,7 +220,7 @@ int8_t bmp280_soft_reset(const struct bmp280_dev *dev)
         rslt = bmp280_set_regs(&reg_addr, &soft_rst_cmd, 1, dev);
 
         /* As per the datasheet, startup time is 2 ms. */
-        dev->delay_ms(2);
+        dev->delay_ms(5);
     }
 
     return rslt;
@@ -295,6 +295,8 @@ int8_t bmp280_get_config(struct bmp280_config *conf, struct bmp280_dev *dev)
     if ((rslt == BMP280_OK) && (conf != NULL))
     {
         rslt = bmp280_get_regs(BMP280_CTRL_MEAS_ADDR, temp, 2, dev);
+        //printf("F4 :%x \r\n",temp[0]);
+        //printf("F5 :%x \r\n",temp[1]);
         if (rslt == BMP280_OK)
         {
             conf->os_temp = BMP280_GET_BITS(BMP280_OS_TEMP, temp[0]);
@@ -399,12 +401,12 @@ int8_t bmp280_get_uncomp_data(struct bmp280_uncomp_data *uncomp_data, const stru
         rslt = bmp280_get_regs(BMP280_PRES_MSB_ADDR, temp, 6, dev);
         if (rslt == BMP280_OK)
         {
-            printf("temp[0] :%x \r\n",temp[0]);
-            printf("temp[1] :%x \r\n",temp[1]);
-            printf("temp[2] :%x \r\n",temp[2]);
-            printf("temp[3] :%x \r\n",temp[3]);
-            printf("temp[4] :%x \r\n",temp[4]);
-            printf("temp[5] :%x \r\n",temp[5]);
+            // printf("temp[0] :%x \r\n",temp[0]);
+            // printf("temp[1] :%x \r\n",temp[1]);
+            // printf("temp[2] :%x \r\n",temp[2]);
+            // printf("temp[3] :%x \r\n",temp[3]);
+            // printf("temp[4] :%x \r\n",temp[4]);
+            // printf("temp[5] :%x \r\n",temp[5]);
             uncomp_data->uncomp_press =
                 (int32_t) ((((uint32_t) (temp[0])) << 12) | (((uint32_t) (temp[1])) << 4) | ((uint32_t) temp[2] >> 4));
             uncomp_data->uncomp_temp =
@@ -424,6 +426,33 @@ int8_t bmp280_get_uncomp_data(struct bmp280_uncomp_data *uncomp_data, const stru
     return rslt;
 }
 
+#if 0
+void bmp280_read_all_reg(struct bmp280_dev *dev)
+{
+    int8_t rslt;
+    uint8_t temp[48] = {0};
+    int i = 0;
+
+    rslt = null_ptr_check(dev);
+    if (rslt == BMP280_OK)
+    {
+        rslt = bmp280_get_regs(BMP280_CHIP_ID_ADDR, temp, 48, dev);
+        if (rslt == BMP280_OK)
+        {
+            printf("all regs read : \r\n");
+            for(i =0;i<48;i++)
+            {
+                printf("%02x ",temp[i]);
+                if(i%16 == 0)
+                {
+                    printf("\r\n");
+                }
+            }
+            
+        }
+    }
+}
+#endif
 /*!
  * @brief This API is used to get the compensated temperature from
  * uncompensated temperature. This API uses 32 bit integers.
@@ -758,6 +787,7 @@ static int8_t conf_sensor(uint8_t mode, const struct bmp280_config *conf, struct
                 temp[1] = BMP280_SET_BITS(temp[1], BMP280_FILTER, conf->filter);
                 temp[1] = BMP280_SET_BITS_POS_0(temp[1], BMP280_SPI3_ENABLE, conf->spi3w_en);
                 rslt = bmp280_set_regs(reg_addr, temp, 2, dev);
+                //printf("conf_sensor :temp = %x ,temp 1 =%x\r\n", temp[0],temp[1]);
                 if (rslt == BMP280_OK)
                 {
                     dev->conf = *conf;

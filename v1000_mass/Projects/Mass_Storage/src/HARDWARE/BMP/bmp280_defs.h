@@ -143,7 +143,7 @@ extern "C" {
 #define BMP280_CHIP_ID3                      UINT8_C(0x58)
 
 /*! @name I2C addresses */
-#define BMP280_I2C_ADDR_V1000                 UINT8_C(0xee)
+#define BMP280_I2C_ADDR_V1000                UINT8_C(0xec)
 #define BMP280_I2C_ADDR_PRIM                 UINT8_C(0x76)
 #define BMP280_I2C_ADDR_SEC                  UINT8_C(0x77)
 

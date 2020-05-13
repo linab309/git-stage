@@ -199,14 +199,16 @@ FRESULT scan_directory_oldfile (
 
 void change_clk_need_int(u8 mode)
 {
-    if(mode == 0)
-      delay_init(16);	     //��ʱ��ʼ��
-    else
-      delay_init(32);	     //��ʱ��ʼ��
+
 
 #if EN_USART1
     uart_init(115200);
 #endif
+
+    if(mode == 0)
+      delay_init(16);	     //��ʱ��ʼ��
+    else
+      delay_init(32);	     //��ʱ��ʼ��
 
     if(mode == 0)
     	USART2_Init(16,38400);	//��ʼ������2

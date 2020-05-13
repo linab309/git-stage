@@ -109,9 +109,9 @@ void BMP085_SendACK(u8 ack)
 	 SDA_OUT();      //SDA����Ϊ����  
 	 IIC_SDA = ack;
      IIC_SCL = 1;
-	 delay_us(5);
+	 delay_us(15);
      IIC_SCL = 0;
-	 delay_us(5);
+	 delay_us(15);
 }
 
 /**************************************
@@ -139,10 +139,10 @@ u8 BMP085_RecvACK()
 #endif
 	SDA_IN();      //SDA����Ϊ����  
     IIC_SCL = 1;
-    delay_us(5);
+    delay_us(15);
 	cy =IIC_SDA ;
 	IIC_SCL = 0;
-    delay_us(5);
+    delay_us(15);
 	return cy;
 }
 
@@ -151,7 +151,7 @@ u8 BMP085_RecvACK()
 **************************************/
 void BMP085_SendByte(u8 txd)
 {
-
+    u8 ack = 0;
 #if 0
     u8 i;
 	SDA_OUT();      //SDA����Ϊ����  
@@ -167,7 +167,8 @@ void BMP085_SendByte(u8 txd)
 	#endif
 
 	IIC_Send_Byte(txd);
-	BMP085_RecvACK();
+	ack = BMP085_RecvACK();
+	printf("ack = %d \r\n",ack);
 }
 
 /**************************************
@@ -208,7 +209,7 @@ void arry_Write(int8_t SlaveAddress,int8_t REG_Address,uint8_t * REG_data,uint16
 	BMP085_Start();                  //��ʼ�ź�
 	BMP085_SendByte(SlaveAddress);   //�����豸��ַ+д�ź�
 	BMP085_SendByte(REG_Address);    //�ڲ��Ĵ�����ַ
-	for(i = 0;i>REG_LEN;i++)
+	for(i = 0;i<REG_LEN;i++)
 	{
 		BMP085_SendByte(REG_data[i]);       //�ڲ��Ĵ�������
 	}
@@ -531,9 +532,15 @@ void ConvAltitude(void)
  */
 int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
-	printf("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	int i = 0;
     /* Implement the I2C write routine according to the target machine. */\
 	arry_Write(i2c_addr,reg_addr,reg_data,length);
+	printf("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	for(i = 0;i<length;i++)
+	{
+		printf("%x ",reg_data[i]);
+	}
+	printf("\r\n");
     return 0;
 }
 
@@ -552,9 +559,14 @@ int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint
  */
 int8_t i2c_reg_read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
-	
+	int i = 0;
 	arry_Read(i2c_addr,reg_addr,reg_data,length);
-	printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d data =%x \r\n", i2c_addr,reg_addr,length,reg_data[0]);
+	printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	for(i = 0;i<length;i++)
+	{
+		printf("%x ",reg_data[i]);
+	}
+	printf("\r\n");
 	/* Implement the I2C read routine according to the target machine. */
 	return 0;
 }
@@ -599,26 +611,31 @@ void print_rslt(const char api_name[], int8_t rslt)
 
 struct bmp280_dev bmp;
 
-void bmp280_read_pressure_tempreature(struct bmp280_dev bmp)
+void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 {
 	int32_t temp32;
 	uint32_t pre32;
 	int8_t rslt;
+	uint8_t power_mode = 0;
+	struct bmp280_config conf;
+	
 	struct bmp280_uncomp_data ucomp_data;
 
 	/* Reading the raw data from sensor */
-	rslt = bmp280_get_uncomp_data(&ucomp_data, &bmp);
+	rslt = bmp280_get_uncomp_data(&ucomp_data, &_bmp);
 
 	/* Getting the compensated pressure using 32 bit precision */
-	rslt = bmp280_get_comp_pres_32bit(&pre32, ucomp_data.uncomp_press, &bmp);
+	rslt = bmp280_get_comp_pres_32bit(&pre32, ucomp_data.uncomp_press, &_bmp);
 	/* Getting the 32 bit compensated temperature */
-	rslt = bmp280_get_comp_temp_32bit(&temp32, ucomp_data.uncomp_temp, &bmp);
+	rslt = bmp280_get_comp_temp_32bit(&temp32, ucomp_data.uncomp_temp, &_bmp);
 
 	temperature =(int)(temp32&0xffff);
 	pressure = (long)pre32;
+	printf("UT: %d, UP: %d,T32: %d, P32: %d, \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pre32);   
+
 	
-	printf("UT: %d, UP: %d,,T32: %d, P32: %d, \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pre32);
-          
+	rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
+	print_rslt(" bmp280_set_power_mode status", rslt);	 
 }
 
 int bmp_moudle_preinit(void)
@@ -661,20 +678,19 @@ int bmp_moudle_preinit(void)
 
 		/* configuring the temperature oversampling, filter coefficient and output data rate */
 		/* Overwrite the desired settings */
-		conf.filter = BMP280_FILTER_COEFF_2;
+		conf.filter = BMP280_FILTER_COEFF_4;
 
 		/* Pressure oversampling set at 4x */
-		conf.os_pres = BMP280_OS_4X;
-		conf.os_temp = BMP280_OS_4X;
+		conf.os_pres = BMP280_OS_2X;
+		conf.os_temp = BMP280_OS_2X;
 		/* Setting the output data rate as 1HZ(1000ms) */
 		conf.odr = BMP280_ODR_1000_MS;
 		rslt = bmp280_set_config(&conf, &bmp);
 		print_rslt(" bmp280_set_config status", rslt);
-
+    	rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
+		print_rslt(" bmp280_set_power_mode status", rslt);	 
+		rslt = bmp280_get_config(&conf, &bmp);
 		/* Always set the power mode after setting the configuration */
-		rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
-		print_rslt(" bmp280_set_power_mode status", rslt);	
-
 		bmp_mode_type = BMP280_TYPE;	
     }
     
@@ -687,6 +703,8 @@ int bmp_moudle_preinit(void)
 //*********************************************************
 void BMP085_get_process(void)
 { 
+	struct bmp280_status status = {0};
+
 	if(bmp_mode_type == BMP180_TYPE)
 	{
 		bmp085Convert();
@@ -694,6 +712,13 @@ void BMP085_get_process(void)
 	}
 	else
 	{
-		bmp280_read_pressure_tempreature(bmp);
+
+		bmp280_get_status(&status,&bmp);
+		printf("status.measuring = %d \r\n",status.measuring);
+		printf("status.im_update = %d \r\n",status.im_update);
+		if((status.measuring == 0) &&(status.im_update == 0))
+		{
+			bmp280_read_pressure_tempreature(bmp);
+		}
 	}	
 } 
