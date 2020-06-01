@@ -431,7 +431,7 @@ void Timer_task(void)
             timer_cnt ++;
         }
     
-        if(timer_bmp085_cnt == 200)
+        if(timer_bmp085_cnt == 50)
         {
             timer_bmp085_cnt = 0;
             //v1000_debug("\r\n timer_bmp085_cnt\n");

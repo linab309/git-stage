@@ -6135,7 +6135,7 @@ void firmware_update_process(void)
     
     if(system_flag_table->lang == 1)
     {
-        fr = f_open(&fil, " ",FA_READ);              
+        fr = f_open(&fil, "V1000.BIN",FA_READ);              
         if(fr == FR_OK)
         {
             system_flag_table->updatefile = 1;
@@ -6155,7 +6155,7 @@ void firmware_update_process(void)
         f_close(&fil);
     }
     else
-    {
+    {               
         fr = f_open(&fil, "V1000.BIN",FA_READ);
         if(fr == FR_OK)
         {

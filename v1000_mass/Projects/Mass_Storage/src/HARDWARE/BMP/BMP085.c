@@ -109,9 +109,9 @@ void BMP085_SendACK(u8 ack)
 	 SDA_OUT();      //SDA����Ϊ����  
 	 IIC_SDA = ack;
      IIC_SCL = 1;
-	 delay_us(15);
+	 delay_us(5);
      IIC_SCL = 0;
-	 delay_us(15);
+	 delay_us(5);
 }
 
 /**************************************
@@ -139,10 +139,10 @@ u8 BMP085_RecvACK()
 #endif
 	SDA_IN();      //SDA����Ϊ����  
     IIC_SCL = 1;
-    delay_us(15);
+    delay_us(5);
 	cy =IIC_SDA ;
 	IIC_SCL = 0;
-    delay_us(15);
+    delay_us(5);
 	return cy;
 }
 
@@ -320,15 +320,12 @@ void Init_BMP085(void)
 	md =  Multiple_read(0xBE);
 
 //	v1000_debug("\r\nBMP085   ac1 :%d,ac2 :%d,ac3 :%d,ac4 :%d,ac5 :%d,ac6 :%d,b1 :%d,b2 :%d, mb :%d, mc :%d, md :%d!\n",
-//		ac1,ac2,ac3,ac4,ac5,ac6,b1,b2,mb,mc,md);
+//  ac1,ac2,ac3,ac4,ac5,ac6,b1,b2,mb,mc,md);
 }
 
 
 
-
 //***********************************************************************
-
-
 void bmp085Convert(void)
 {
 	long ut;
@@ -360,21 +357,19 @@ void bmp085Convert(void)
     {
     	temperature = temperature-(temperature*0.1);
     }
-
-//	 else
-	 	{
-	//	temperature = (temperature +((b5 + 8) >> 4))/2;
+//	else
+	{
+	    // temperature = (temperature +((b5 + 8) >> 4))/2;
 		// temperature = (temperature+temperature_new)/2;
-	 	}
+	}
 #if 0
 	 //*************
-
 	 conversion(temperature);
 	v1000_debug("\r\ntemperature : %ld \n\n",temperature);
 	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//�õ������ַ���
 	 OLED_ShowString(0,16,dtbuf_jian);	 	
      //*************
- #endif
+#endif
 	
 	b6 = b5 - 4000;
 	x1 = (b2 * (b6 * b6 >> 12)) >> 11;
@@ -387,25 +382,27 @@ void bmp085Convert(void)
 	b4 = (ac4 * (unsigned long) (x3 + 32768)) >> 15;
 	b7 = ((unsigned long) up - b3) * (50000 >> OSS);
 	if( b7 < 0x80000000)
-	     p = (b7 * 2) / b4 ;
-           else  
-		    p = (b7 / b4) * 2;
+	{
+		p = (b7 * 2) / b4 ;
+	} 
+    else
+	{
+		p = (b7 / b4) * 2;
+	}  
+		    
 	x1 = (p >> 8) * (p >> 8);
 	x1 = (x1 * 3038) >> 16;
 	x2 = (-7357 * p) >> 16;
-	 if(pressure == 0xffffffff)	 
+	if(pressure == 0xffffffff)	 
+	{
 	 	pressure = p + ((x1 + x2 + 3791) >> 4);
-	 else
+	}
+	else
 	{
 	 	pressure_new = (pressure +(p + ((x1 + x2 + 3791) >> 4)))/2;	 	
 		pressure = (pressure+pressure_new)/2;
 	}
-//	 conversion(pressure);
 
-//	  v1000_debug("\r\n 2: %ld!\n\n",pressure);
-//	 sprintf((char *)dtbuf_jian,"P: %c%c%c%c.%c%chpa",shiwan,wan,qian,bai,shi,ge);	//�õ������ַ���
-//	 OLED_ShowString(0,48,dtbuf_jian);	 	
-	
 }
 
 /****************************************************************
@@ -564,12 +561,12 @@ int8_t i2c_reg_read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint1
 {
 	int i = 0;
 	arry_Read(i2c_addr,reg_addr,reg_data,length);
-	// printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
-	// for(i = 0;i<length;i++)
-	// {
-	// 	printf("%x ",reg_data[i]);
-	// }
-	// printf("\r\n");
+	//  printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	//  for(i = 0;i<length;i++)
+	//  {
+	//  	printf("%x ",reg_data[i]);
+	//  }
+	//  printf("\r\n");
 	/* Implement the I2C read routine according to the target machine. */
 	return 0;
 }
@@ -617,8 +614,9 @@ struct bmp280_dev bmp;
 void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 {
 	int32_t temp32;
-	uint32_t pre32;
+	uint32_t pres32;
 	int8_t rslt;
+
 	uint8_t power_mode = 0;
 
 	struct bmp280_status status = {0};
@@ -629,16 +627,28 @@ void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 	{	
 		/* Reading the raw data from sensor */
 		rslt = bmp280_get_uncomp_data(&ucomp_data, &_bmp);
-		/* Getting the compensated pressure using 32 bit precision */
-		rslt = bmp280_get_comp_pres_32bit(&pre32, ucomp_data.uncomp_press, &_bmp);
-		/* Getting the 32 bit compensated temperature */
+				/* Getting the 32 bit compensated temperature */
 		rslt = bmp280_get_comp_temp_32bit(&temp32, ucomp_data.uncomp_temp, &_bmp);
+		/* Getting the compensated pressure using 32 bit precision */
+		rslt = bmp280_get_comp_pres_32bit(&pres32, ucomp_data.uncomp_press, &_bmp);
+
+        /* Getting the compensated pressure using 64 bit precision */
+        //rslt = bmp280_get_comp_pres_my(&pres64, ucomp_data.uncomp_press, &_bmp);
+        // /* Getting the compensated pressure as floating point value */
+        // rslt = bmp280_get_comp_pres_double(&pres, ucomp_data.uncomp_press, &_bmp);
 
 		temperature =(int)(temp32&0xffff)/10;
-		pressure = (long)pre32;
-		printf("UT: %d, UP: %d,T32: %d, P32: %d \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pressure);   	
-		rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
-		print_rslt(" bmp280_set_power_mode status", rslt);
+		pressure = (long)pres32;
+		// printf("UT: %d, UP: %d,T32: %d, P32: %d   \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pressure);   	
+		// rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
+		// print_rslt(" bmp280_set_power_mode status", rslt);
+
+		// printf("UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
+		// ucomp_data.uncomp_press,
+		// pres32,
+		// pres64,
+		// pres64 / 256,
+		// pres);
 	}
 }
 
@@ -657,7 +667,7 @@ int bmp_moudle_preinit(void)
     bmp.intf = BMP280_I2C_INTF;
 
     /* Map the I2C read & write function pointer with the functions responsible for I2C bus transfer */
-    bmp.read = i2c_reg_read;
+    bmp.read  = i2c_reg_read;
     bmp.write = i2c_reg_write;
 
     /* To enable SPI interface: comment the above 4 lines and uncomment the below 4 lines */
@@ -682,17 +692,17 @@ int bmp_moudle_preinit(void)
 
 		/* configuring the temperature oversampling, filter coefficient and output data rate */
 		/* Overwrite the desired settings */
-		conf.filter = BMP280_FILTER_COEFF_4;
+		conf.filter = BMP280_FILTER_COEFF_16;
 
 		/* Pressure oversampling set at 4x */
 		conf.os_pres = BMP280_OS_16X;
 		conf.os_temp = BMP280_OS_2X;
 		/* Setting the output data rate as 1HZ(1000ms) */
-		conf.odr = BMP280_ODR_1000_MS;
+		conf.odr = BMP280_ODR_500_MS;
 		rslt = bmp280_set_config(&conf, &bmp);
 		print_rslt(" bmp280_set_config status", rslt);
 		/* Always set the power mode after setting the configuration */
-		rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &bmp);
+		rslt = bmp280_set_power_mode(BMP280_NORMAL_MODE, &bmp);
 		print_rslt(" bmp280_set_power_mode status", rslt);
 		bmp_mode_type = BMP280_TYPE;	
     }
