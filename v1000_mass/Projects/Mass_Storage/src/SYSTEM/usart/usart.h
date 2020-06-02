@@ -13,7 +13,7 @@
 
 #define USART_REC_LEN  			200  	//�����������ֽ��� 200
 #define EN_USART1_RX 			0		//ʹ�ܣ�1��/��ֹ��0������1����
-#define EN_USART1 1
+#define EN_USART1 0
 
 #if EN_USART1_RX
 

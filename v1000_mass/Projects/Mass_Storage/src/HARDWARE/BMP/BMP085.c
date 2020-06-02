@@ -168,7 +168,7 @@ void BMP085_SendByte(u8 txd)
 
 	IIC_Send_Byte(txd);
 	ack = BMP085_RecvACK();
-	//printf("ack = %d \r\n",ack);
+	//v1000_debug("ack = %d \r\n",ack);
 }
 
 /**************************************
@@ -366,7 +366,7 @@ void bmp085Convert(void)
 	 //*************
 	 conversion(temperature);
 	v1000_debug("\r\ntemperature : %ld \n\n",temperature);
-	 sprintf((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//�õ������ַ���
+	 sv1000_debug((char *)dtbuf_jian,"T:  %c%c.%cC",bai,shi,ge);	//�õ������ַ���
 	 OLED_ShowString(0,16,dtbuf_jian);	 	
      //*************
 #endif
@@ -432,7 +432,7 @@ int BMP085_Get_Altitude(void)
 //		altitude	
 //	conversion(altitude);
 	
-//	sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���
+//	sv1000_debug((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���
 //		
 //	OLED_ShowString(0,32,dtbuf_jian);	 
 	//v1000_debug("\r\n H: %f m \n\n",altitude);
@@ -488,9 +488,9 @@ void ConvAltitude(void)
 		conversion(Altitude);
 		v1000_debug("\r\n H: %ld m \n\n",Altitude);
 		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
+			sv1000_debug((char *)dtbuf_jian,"H: +%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
 		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
+			sv1000_debug((char *)dtbuf_jian,"H: -%c%c%c%c.%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
 		OLED_ShowString(0,32,dtbuf_jian);
 
 	AltitudeTempFlag++;									//��־�Լ�
@@ -502,9 +502,9 @@ void ConvAltitude(void)
 		v1000_debug("\r\n H: %ld m \n\n",Tempnum);
 		Tempnum = 0;
 		if(flag ==0)
-			sprintf((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
+			sv1000_debug((char *)dtbuf_jian,"H: +%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
 		else	
-			sprintf((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
+			sv1000_debug((char *)dtbuf_jian,"H: -%c%c%c.%c%cm",wan,qian,bai,shi,ge);	//�õ������ַ���		
 		}
 	
 		Tempnum+=Altitude;			//���ݱ�־�������ݵ�����
@@ -535,12 +535,12 @@ int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint
 	int i = 0;
     /* Implement the I2C write routine according to the target machine. */\
 	arry_Write(i2c_addr,reg_addr,reg_data,length);
-	// printf("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	// v1000_debug("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
 	// for(i = 0;i<length;i++)
 	// {
-	// 	printf("%x ",reg_data[i]);
+	// 	v1000_debug("%x ",reg_data[i]);
 	// }
-	// printf("\r\n");
+	// v1000_debug("\r\n");
     return 0;
 }
 
@@ -561,12 +561,12 @@ int8_t i2c_reg_read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint1
 {
 	int i = 0;
 	arry_Read(i2c_addr,reg_addr,reg_data,length);
-	//  printf("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
+	//  v1000_debug("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
 	//  for(i = 0;i<length;i++)
 	//  {
-	//  	printf("%x ",reg_data[i]);
+	//  	v1000_debug("%x ",reg_data[i]);
 	//  }
-	//  printf("\r\n");
+	//  v1000_debug("\r\n");
 	/* Implement the I2C read routine according to the target machine. */
 	return 0;
 }
@@ -584,27 +584,27 @@ void print_rslt(const char api_name[], int8_t rslt)
 {
     if (rslt != BMP280_OK)
     {
-        printf("%s\t", api_name);
+        v1000_debug("%s\t", api_name);
         if (rslt == BMP280_E_NULL_PTR)
         {
-            printf("Error [%d] : Null pointer error\r\n", rslt);
+            v1000_debug("Error [%d] : Null pointer error\r\n", rslt);
         }
         else if (rslt == BMP280_E_COMM_FAIL)
         {
-            printf("Error [%d] : Bus communication failed\r\n", rslt);
+            v1000_debug("Error [%d] : Bus communication failed\r\n", rslt);
         }
         else if (rslt == BMP280_E_IMPLAUS_TEMP)
         {
-            printf("Error [%d] : Invalid Temperature\r\n", rslt);
+            v1000_debug("Error [%d] : Invalid Temperature\r\n", rslt);
         }
         else if (rslt == BMP280_E_DEV_NOT_FOUND)
         {
-            printf("Error [%d] : Device not found\r\n", rslt);
+            v1000_debug("Error [%d] : Device not found\r\n", rslt);
         }
         else
         {
             /* For more error codes refer "*_defs.h" */
-            printf("Error [%d] : Unknown error code\r\n", rslt);
+            v1000_debug("Error [%d] : Unknown error code\r\n", rslt);
         }
     }
 }
@@ -639,11 +639,11 @@ void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 
 		temperature =(int)(temp32&0xffff)/10;
 		pressure = (long)pres32;
-		// printf("UT: %d, UP: %d,T32: %d, P32: %d   \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pressure);   	
+		// v1000_debug("UT: %d, UP: %d,T32: %d, P32: %d   \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pressure);   	
 		// rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
 		// print_rslt(" bmp280_set_power_mode status", rslt);
 
-		// printf("UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
+		// v1000_debug("UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
 		// ucomp_data.uncomp_press,
 		// pres32,
 		// pres64,
@@ -688,17 +688,17 @@ int bmp_moudle_preinit(void)
     else
     {       
 		rslt = bmp280_get_config(&conf, &bmp);
-		printf(" bmp280 init OK");
+		v1000_debug(" bmp280 init OK");
 
 		/* configuring the temperature oversampling, filter coefficient and output data rate */
 		/* Overwrite the desired settings */
-		conf.filter = BMP280_FILTER_COEFF_16;
+		conf.filter = BMP280_FILTER_OFF;
 
 		/* Pressure oversampling set at 4x */
-		conf.os_pres = BMP280_OS_16X;
-		conf.os_temp = BMP280_OS_2X;
+		conf.os_pres = BMP280_OS_2X;
+		conf.os_temp = BMP280_OS_1X;
 		/* Setting the output data rate as 1HZ(1000ms) */
-		conf.odr = BMP280_ODR_500_MS;
+		conf.odr = BMP280_ODR_62_5_MS;
 		rslt = bmp280_set_config(&conf, &bmp);
 		print_rslt(" bmp280_set_config status", rslt);
 		/* Always set the power mode after setting the configuration */

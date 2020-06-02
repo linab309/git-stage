@@ -295,8 +295,8 @@ int8_t bmp280_get_config(struct bmp280_config *conf, struct bmp280_dev *dev)
     if ((rslt == BMP280_OK) && (conf != NULL))
     {
         rslt = bmp280_get_regs(BMP280_CTRL_MEAS_ADDR, temp, 2, dev);
-        //printf("F4 :%x \r\n",temp[0]);
-        //printf("F5 :%x \r\n",temp[1]);
+        //v1000_debug("F4 :%x \r\n",temp[0]);
+        //v1000_debug("F5 :%x \r\n",temp[1]);
         if (rslt == BMP280_OK)
         {
             conf->os_temp = BMP280_GET_BITS(BMP280_OS_TEMP, temp[0]);
@@ -444,13 +444,13 @@ void bmp280_read_all_reg(struct bmp280_dev *dev)
         rslt = bmp280_get_regs(BMP280_CHIP_ID_ADDR, temp, 48, dev);
         if (rslt == BMP280_OK)
         {
-            printf("all regs read : \r\n");
+            v1000_debug("all regs read : \r\n");
             for(i =0;i<48;i++)
             {
-                printf("%02x ",temp[i]);
+                v1000_debug("%02x ",temp[i]);
                 if(i%16 == 0)
                 {
-                    printf("\r\n");
+                    v1000_debug("\r\n");
                 }
             }
             
@@ -512,7 +512,7 @@ int8_t bmp280_get_comp_pres_32bit(uint32_t *comp_pres, uint32_t uncomp_pres, con
              ((((int32_t) dev->calib_param.dig_p2) * var1) / 2)) / 262144;
         var1 = ((((32768 + var1)) * ((int32_t) dev->calib_param.dig_p1)) / 32768);
         *comp_pres = (uint32_t)(((int32_t)(1048576 - uncomp_pres) - (var2 / 4096)) * 3125);
-        // printf("uncomp_pres: %d, P32: %d  var2 :%d \r\n", uncomp_pres, *comp_pres ,var2 );   	
+        // v1000_debug("uncomp_pres: %d, P32: %d  var2 :%d \r\n", uncomp_pres, *comp_pres ,var2 );   	
         /* Avoid exception caused by division with zero */
         if (var1 != 0)
         {
@@ -530,7 +530,7 @@ int8_t bmp280_get_comp_pres_32bit(uint32_t *comp_pres, uint32_t uncomp_pres, con
             var2 = (((int32_t) (*comp_pres / 4)) * ((int32_t) dev->calib_param.dig_p8)) / 8192;
             *comp_pres = (uint32_t) ((int32_t) *comp_pres + ((var1 + var2 + dev->calib_param.dig_p7) / 16));
 
-            // printf("P32: %d  var1 :%d  dev->calib_param.dig_p7 :%d \r\n", *comp_pres ,var1 ,dev->calib_param.dig_p7); 
+            // v1000_debug("P32: %d  var1 :%d  dev->calib_param.dig_p7 :%d \r\n", *comp_pres ,var1 ,dev->calib_param.dig_p7); 
 
             rslt = BMP280_OK;
         }
@@ -761,19 +761,19 @@ static void interleave_data(const uint8_t *reg_addr, uint8_t *temp_buff, const u
 static int8_t get_calib_param(struct bmp280_dev *dev)
 {
     int8_t rslt;
-    int i = 0; 
+    //int i = 0; 
     uint8_t temp[BMP280_CALIB_DATA_SIZE] = { 0 };
 
     rslt = null_ptr_check(dev);
     if (rslt == BMP280_OK)
     {
         rslt = bmp280_get_regs(BMP280_DIG_T1_LSB_ADDR, temp, BMP280_CALIB_DATA_SIZE, dev);
-        printf("\r\n");
-        for(i = 0 ; i<BMP280_CALIB_DATA_SIZE; i++)
-        {
-            printf("%02x ", temp[i]);
-        }
-        printf("\r\n");
+        // v1000_debug("\r\n");
+        // for(i = 0 ; i<BMP280_CALIB_DATA_SIZE; i++)
+        // {
+        //     v1000_debug("%02x ", temp[i]);
+        // }
+        // v1000_debug("\r\n");
         
         if (rslt == BMP280_OK)
         {
@@ -834,7 +834,7 @@ static int8_t conf_sensor(uint8_t mode, const struct bmp280_config *conf, struct
                 temp[1] = BMP280_SET_BITS(temp[1], BMP280_FILTER, conf->filter);
                 temp[1] = BMP280_SET_BITS_POS_0(temp[1], BMP280_SPI3_ENABLE, conf->spi3w_en);
                 rslt = bmp280_set_regs(reg_addr, temp, 2, dev);
-                //printf("conf_sensor :temp = %x ,temp 1 =%x\r\n", temp[0],temp[1]);
+                //v1000_debug("conf_sensor :temp = %x ,temp 1 =%x\r\n", temp[0],temp[1]);
                 if (rslt == BMP280_OK)
                 {
                     dev->conf = *conf;
