@@ -6490,7 +6490,7 @@ void system_setting_item(void)
                 {
                     Movie_Show_Img(0,0,bmp_system_status);
                 }
-                OLED_ShowString12(72,28,"V1.0.7");
+                OLED_ShowString12(72,28,"V2.0.0");
                 sprintf((char *)dtbuf,"%d",system_flag_table->powerdown_timers); //most
                 OLED_ShowString12(72,40,dtbuf);
                 stm_read_eerpom(MENU_FRIST_POWER_INDEX_ADDRES ,&setting_tp);

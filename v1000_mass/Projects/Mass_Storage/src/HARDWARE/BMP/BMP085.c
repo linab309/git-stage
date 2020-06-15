@@ -532,7 +532,7 @@ void ConvAltitude(void)
  */
 int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
-	int i = 0;
+//	int i = 0;
     /* Implement the I2C write routine according to the target machine. */\
 	arry_Write(i2c_addr,reg_addr,reg_data,length);
 	// v1000_debug("i2c write :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
@@ -559,7 +559,7 @@ int8_t i2c_reg_write(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint
  */
 int8_t i2c_reg_read(uint8_t i2c_addr, uint8_t reg_addr, uint8_t *reg_data, uint16_t length)
 {
-	int i = 0;
+//	int i = 0;
 	arry_Read(i2c_addr,reg_addr,reg_data,length);
 	//  v1000_debug("i2c read :  i2c_addr=%x  ,reg_addr=%x length =%d \r\n", i2c_addr,reg_addr,length);
 	//  for(i = 0;i<length;i++)
@@ -617,7 +617,7 @@ void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 	uint32_t pres32;
 	int8_t rslt;
 
-	uint8_t power_mode = 0;
+//	uint8_t power_mode = 0;
 
 	struct bmp280_status status = {0};
 	struct bmp280_uncomp_data ucomp_data;
@@ -640,8 +640,8 @@ void bmp280_read_pressure_tempreature(struct bmp280_dev _bmp)
 		temperature =(int)(temp32&0xffff)/10;
 		pressure = (long)pres32;
 		// v1000_debug("UT: %d, UP: %d,T32: %d, P32: %d   \r\n", ucomp_data.uncomp_temp,ucomp_data.uncomp_press, temp32, pressure);   	
-		// rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
-		// print_rslt(" bmp280_set_power_mode status", rslt);
+		rslt = bmp280_set_power_mode(BMP280_FORCED_MODE, &_bmp);
+		print_rslt(" bmp280_set_power_mode status", rslt);
 
 		// v1000_debug("UP: %ld, P32: %ld, P64: %ld, P64N: %ld, P: %f\r\n",
 		// ucomp_data.uncomp_press,
@@ -695,8 +695,8 @@ int bmp_moudle_preinit(void)
 		conf.filter = BMP280_FILTER_OFF;
 
 		/* Pressure oversampling set at 4x */
-		conf.os_pres = BMP280_OS_2X;
-		conf.os_temp = BMP280_OS_1X;
+		conf.os_pres = BMP280_OS_4X;
+		conf.os_temp = BMP280_OS_4X;
 		/* Setting the output data rate as 1HZ(1000ms) */
 		conf.odr = BMP280_ODR_62_5_MS;
 		rslt = bmp280_set_config(&conf, &bmp);
