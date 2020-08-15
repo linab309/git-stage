@@ -581,7 +581,7 @@ u8 RTC_Get(u8 flag,tm *my_timer)
 	if(flag)
 	{
 		my_timer->w_date +=1;  //得到日期
-		if(Is_Leap_Year(my_timer->w_year)&&(my_timer->w_month == 1))
+		if(Is_Leap_Year(my_timer->w_year+2000)&&(my_timer->w_month == 1))
 		{
 			temp1 = 29;
 		}
