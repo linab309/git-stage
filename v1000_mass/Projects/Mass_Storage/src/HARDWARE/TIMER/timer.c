@@ -249,11 +249,12 @@ void TIM3_IRQHandler(void)
                 Button_key_perss(0);
         }
         
-        if(static_rtc_cnt == 10)
+        if(static_rtc_cnt == 5)
         {
             static_rtc_cnt = 0;
-            RTC_TimeShow();
             RTC_DateShow();
+            RTC_TimeShow();
+           
         }
         else
             static_rtc_cnt++;
