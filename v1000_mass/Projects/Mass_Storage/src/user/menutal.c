@@ -149,7 +149,7 @@ extern u16 powerdonw_resume_timer;
 
 FIL sys_fp ;
 FRESULT sys_fr ;
-tm my_timer;
+static tm my_timer;
 
 int16_t temperature_pass[96];
 int16_t speed_pass[96];
@@ -1257,6 +1257,12 @@ void check_time(void)
          min_timer  = diff_tone - hour_timer*60;
      }
 
+    if((my_timer.w_year < 2014)||(my_timer.w_year > 2100))
+    {
+        rtc_set_flag = 1;
+        return;
+    }
+    
 	rtc_set(my_timer.w_year,my_timer.w_month,my_timer.w_date,hour_timer,min_timer,my_timer.sec,my_timer.week);
 
 	stm_read_eerpom(MENU_FRIST_POWER_INDEX_ADDRES ,&setting_tp);
@@ -3984,7 +3990,7 @@ void save_guiji_message(u8 guji_record_type)
 	}
 	else
     {
-        if(gpsx->utc.sec != RTC_TimeStructure.RTC_Seconds)
+        if(gpsx->utc.min != RTC_TimeStructure.RTC_Minutes)
         {
             v1000_debug("\n\r sec : %d   RTC_Seconds :%d  \r\n",gpsx->utc.sec,RTC_TimeStructure.RTC_Seconds);
             v1000_debug("\n\r min : %d   RTC_Minutes :%d  \r\n",gpsx->utc.min,RTC_TimeStructure.RTC_Minutes);
