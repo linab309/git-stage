@@ -23,7 +23,7 @@
 #define KEY_LONG_ENTER 3
 
 
-/****ÉèÖÃ²Ëµ¥*****/
+/****ï¿½ï¿½ï¿½Ã²Ëµï¿½*****/
 #define MENU_SETTING_MAIN_PAGE 0
 #define MENU_SETTING_SEC_PAGE 1
 #define MENU_SETTING_THR_PAGE 2
@@ -130,7 +130,7 @@ typedef enum
 
 
 void is_update_to_poweron(void);
-void check_time(void);
+void check_time(u8 flag_update);
 void menu_keyprocess(u8 key);
 void menu_real_speed_display(void);
 void menu_main_display(void);

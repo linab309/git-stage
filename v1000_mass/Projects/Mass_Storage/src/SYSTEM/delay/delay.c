@@ -8,7 +8,7 @@
 //������̳:www.openedv.com
 //�޸�����:2010/5/27
 //�汾��V1.2
-//��Ȩ���У�����ؾ���
+//��Ȩ���У�����ؾ���?
 //Copyright(C) ����ԭ�� 2009-2019
 //All rights reserved
 //********************************************************************************
@@ -36,7 +36,7 @@ void delay_init(u8 SYSCLK)
   }
 
   #if 1
-	SysTick->CTRL|=0x00000004;//bit2���,ѡ���ⲿʱ��  HCLK/8
+	SysTick->CTRL|=0x00000004;//bit2���?,ѡ���ⲿʱ��  HCLK/8
 	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK);	//ѡ���ⲿʱ��  HCLK/8
 	if(SYSCLK<8)
 	{
@@ -53,7 +53,7 @@ void delay_init(u8 SYSCLK)
 }								    
 //��ʱnms
 //ע��nms�ķ�Χ
-//SysTick->LOADΪ24λ�Ĵ���,����,�����ʱΪ:
+//SysTick->LOADΪ24λ�Ĵ���,����,�����ʱ�?:
 //nms<=0xffffff*8*1000/SYSCLK
 //SYSCLK��λΪHz,nms��λΪms
 //��72M������,nms<=1864 
@@ -62,8 +62,8 @@ void delay_ms(u16 nms)
 //TimingDelay = nms;
 #if 1
 	u32 temp;		   
-	SysTick->LOAD=(u32)nms*fac_ms;//ʱ�����(SysTick->LOADΪ24bit)
-	SysTick->VAL =0x00;           //��ռ�����
+	SysTick->LOAD=(u32)nms*fac_ms;//ʱ�����?(SysTick->LOADΪ24bit)
+	SysTick->VAL =0x00;           //��ռ�����?
 	SysTick->CTRL=0x01 ;          //��ʼ����  
 	do
 	{
@@ -71,7 +71,7 @@ void delay_ms(u16 nms)
 	}
 	while(temp&0x01&&!(temp&(1<<16)));//�ȴ�ʱ�䵽��   
 	SysTick->CTRL=0x00;       //�رռ�����
-	SysTick->VAL =0X00;       //��ռ�����	  	    
+	SysTick->VAL =0X00;       //��ռ�����?	  	    
 	#endif
 }   
 //��ʱnus
@@ -81,8 +81,8 @@ void delay_us(u32 nus)
 //TimingDelay = nus;
 #if 1
 	u32 temp;	    	 
-	SysTick->LOAD=nus*fac_us; //ʱ�����	  		 
-	SysTick->VAL=0x00;        //��ռ�����
+	SysTick->LOAD=nus*fac_us; //ʱ�����?	  		 
+	SysTick->VAL=0x00;        //��ռ�����?
 	SysTick->CTRL=0x01 ;      //��ʼ���� 	 
 	do
 	{
@@ -90,7 +90,7 @@ void delay_us(u32 nus)
 	}
 	while(temp&0x01&&!(temp&(1<<16)));//�ȴ�ʱ�䵽��   
 	SysTick->CTRL=0x00;       //�رռ�����
-	SysTick->VAL =0X00;       //��ռ�����	 
+	SysTick->VAL =0X00;       //��ռ�����?	 
 	#endif
 }
 

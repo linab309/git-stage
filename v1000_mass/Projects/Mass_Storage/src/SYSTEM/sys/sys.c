@@ -404,7 +404,7 @@ void Stm32_Clock_Init(u8 PLL)
     ;
     }
 #endif
-  //MYRCC_DeInit();		  //∏¥Œª≤¢≈‰÷√œÚ¡ø±
+  //MYRCC_DeInit();		  //∏¥Œª≤¢≈‰÷√œÚ¡ø?
 
   /* Enable the GPIOs clocks */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC| RCC_AHBPeriph_GPIOD, ENABLE);
@@ -757,7 +757,7 @@ void Choose_power_mode(u8 Mcu_State)
     		/* Enable PVD */
     		PWR_PVDCmd(ENABLE);
     //           Enter_LowPowerMode();
-    		delay_init(16);	     //—” ±≥ı ºª//
+    		delay_init(16);	     //—” ±≥ı º?//
     		Timerx_Init(99,1599);//10Khz  º∆ ˝4999 --- 500ms
 #if EN_USART1
     		uart_init(115200);

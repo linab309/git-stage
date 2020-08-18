@@ -338,20 +338,19 @@ void RTC_TimeRegulate(void)
 //rtc_set(13,09,30,09,19,28,1)
 void  rtc_set(u16 syear,u8 smon,u8 sday,u8 hour,u8 min,u8 sec,u8 week)
 {
-
-
-	v1000_debug("rtc_set %d-%d-%d  %d:%d:%d %d\n",syear ,smon,sday,hour,min,sec,week);
 	RTC_TimeStructure.RTC_Hours =hour;
 	RTC_TimeStructure.RTC_Minutes = min;
 	RTC_TimeStructure.RTC_Seconds = sec;
-
-
 
 	RTC_DateStructure.RTC_WeekDay =  RTC_Get_Week(syear+2000, smon, sday);
 	RTC_DateStructure.RTC_Date = sday;
 	RTC_DateStructure.RTC_Month = smon;
 	RTC_DateStructure.RTC_Year = syear;
-	RTC_TimeRegulate();
+  v1000_debug("rtc_set %d-%d-%d  %d:%d:%d %d\n",syear ,smon,sday,hour,min,sec,RTC_DateStructure.RTC_WeekDay);
+  if(week != 111)
+  {   
+	  RTC_TimeRegulate();
+  }
 }
 
 /**

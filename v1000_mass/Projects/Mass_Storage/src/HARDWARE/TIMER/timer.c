@@ -618,7 +618,7 @@ void gps_data_receiver(void)
             if(gpsx->svnum >= 3)
             {
                 rtc_set_flag = 0;            
-                 check_time();
+                 check_time(1);
             }
         }
         else

@@ -1159,7 +1159,7 @@ void menu_real_crood_display(void)
 
 }
 
-void check_time(void)
+void check_time(u8 flag_update)
 {
     u16 gpsx_utc;
     u16 hour_timer,min_timer;
@@ -1180,7 +1180,7 @@ void check_time(void)
         my_timer.w_year = gpsx->utc.year -2000;
         my_timer.w_month =gpsx->utc.month;
         my_timer.w_date = gpsx->utc.date;
-        my_timer.week = RTC_Get_Week(gpsx->utc.year ,my_timer.w_month,my_timer.w_date);
+        //my_timer.week = RTC_Get_Week(gpsx->utc.year ,my_timer.w_month,my_timer.w_date);
         gpsx_utc = (gpsx->utc.hour*60+gpsx->utc.min);
         my_timer.sec = gpsx->utc.sec;
 
@@ -1244,7 +1244,7 @@ void check_time(void)
          diff_tone +=(s16)((time_zone - system_flag_table->index_timerzone)*60);
  
          if(diff_tone >= (24*60))
-         {
+         {  
              RTC_Get(1,&my_timer);
              diff_tone = diff_tone - (24*60);
          }
@@ -1256,14 +1256,17 @@ void check_time(void)
          hour_timer = diff_tone/60;
          min_timer  = diff_tone - hour_timer*60;
      }
-
-    if((my_timer.w_year < 2014)||(my_timer.w_year > 2100))
+    
+    if(flag_update == 1)
     {
-        rtc_set_flag = 1;
-        return;
+        rtc_set(my_timer.w_year,my_timer.w_month,my_timer.w_date,hour_timer,min_timer,my_timer.sec,my_timer.week);    
+    }    
+    else
+    {
+        rtc_set(my_timer.w_year,my_timer.w_month,my_timer.w_date,hour_timer,min_timer,my_timer.sec,111);
     }
     
-	rtc_set(my_timer.w_year,my_timer.w_month,my_timer.w_date,hour_timer,min_timer,my_timer.sec,my_timer.week);
+    
 
 	stm_read_eerpom(MENU_FRIST_POWER_INDEX_ADDRES ,&setting_tp);
     if((system_flag_table->run_mode == 1)&&(gpsx->svnum >= 2))
@@ -3990,14 +3993,20 @@ void save_guiji_message(u8 guji_record_type)
 	}
 	else
     {
-        if(gpsx->utc.min != RTC_TimeStructure.RTC_Minutes)
+        // if(gpsx->utc.sec != RTC_TimeStructure.RTC_Seconds)
         {
-            v1000_debug("\n\r sec : %d   RTC_Seconds :%d  \r\n",gpsx->utc.sec,RTC_TimeStructure.RTC_Seconds);
-            v1000_debug("\n\r min : %d   RTC_Minutes :%d  \r\n",gpsx->utc.min,RTC_TimeStructure.RTC_Minutes);
-            check_time();
+            // v1000_debug("\n\r sec : %d   RTC_Seconds :%d  \r\n",gpsx->utc.sec,RTC_TimeStructure.RTC_Seconds);
+            // v1000_debug("\n\r min : %d   RTC_Minutes :%d  \r\n",gpsx->utc.min,RTC_TimeStructure.RTC_Minutes);
+            check_time(0);
         }
         
-		guji_data.bitc.year  = (RTC_DateStructure.RTC_Year-16);
+		// guji_data.bitc.year  = (RTC_DateStructure.RTC_Year-16);
+		// guji_data.bitc.month = RTC_DateStructure.RTC_Month;
+		// guji_data.bitc.date  = RTC_DateStructure.RTC_Date;
+		// guji_data.bitc.hour  = RTC_TimeStructure.RTC_Hours;
+		// guji_data.bitc.min =   RTC_TimeStructure.RTC_Minutes;
+		// guji_data.bitc.sec =   RTC_TimeStructure.RTC_Seconds;
+        guji_data.bitc.year  = (RTC_DateStructure.RTC_Year-16);
 		guji_data.bitc.month = RTC_DateStructure.RTC_Month;
 		guji_data.bitc.date  = RTC_DateStructure.RTC_Date;
 		guji_data.bitc.hour  = RTC_TimeStructure.RTC_Hours;
@@ -4277,7 +4286,7 @@ void Recording_guji(void)
 				guji_latitude1_flag = 	gpsx->nshemi;
 				guji_longitude1_flag = gpsx->ewhemi;
 				Flash_write_buffer_Index = 0;
-                check_time();  
+                check_time(1);  
                 //v1000_debug("w_year :%d \r\n",my_timer.w_year);
                 if(system_flag_table->baifenbi == 0)
                 {
@@ -6619,7 +6628,7 @@ void system_setting_item(void)
                 v1000_debug("\r\ntime_zone-%f\r\n",time_zone);
 				if(timer_zone_Aarry[system_flag_table->time_zone][0] == '-')
 					time_zone = -time_zone;
-                check_time();
+                check_time(1);
             }
         
             if(menu_setting_item == LANGUAGE)

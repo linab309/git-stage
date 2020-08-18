@@ -106,7 +106,7 @@ void USART2_Init(u32 pclk1,u32 bound)
       if(pclk1 == 16)
 	  TIM4_Init(99,1599);		//10ms÷–∂œ
       else
-	  TIM4_Init(99,3199);		//10ms÷–∂
+	  TIM4_Init(99,3199);		//10ms÷–?
 	  
 	USART2_RX_STA=0;		//«Â¡„
 	TIM4_Set(0);			//πÿ±’∂® ±∆˜4
