@@ -594,10 +594,10 @@ u8 RTC_Get(u8 flag,tm *my_timer)
 			my_timer->w_date=1;//平年
 			my_timer->w_month++;//得到月份
 			if(my_timer->w_month>12)
-				{
+			{
 				my_timer->w_month = 1;
 				my_timer->w_year++;
-				}
+			}
 	    }
 
 	}
@@ -608,7 +608,7 @@ u8 RTC_Get(u8 flag,tm *my_timer)
 		{
 	    	my_timer->w_month--;//得到月份
 
-		    if(Is_Leap_Year(my_timer->w_year)&&my_timer->w_month==1)
+		    if(Is_Leap_Year(my_timer->w_year+2000)&&my_timer->w_month==1)
 			{
 			    temp1 = 29;
 			}

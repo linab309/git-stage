@@ -219,7 +219,7 @@ void TIM10_IRQHandler(void)
 
 
 
-//Íâ²¿ÖÐ¶Ï15~10·þÎñ³ÌÐò
+//ï¿½â²¿ï¿½Ð¶ï¿½15~10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void EXTI15_10_IRQHandler(void)
 {	
 //       LED1 != LED1;
@@ -235,7 +235,7 @@ void EXTI15_10_IRQHandler(void)
 }
 
 
-//Íâ²¿ÖÐ¶Ï15~10·þÎñ³ÌÐò
+//ï¿½â²¿ï¿½Ð¶ï¿½15~10ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void EXTI0_IRQHandler(void)
 {	
 //       LED1 != LED1;
